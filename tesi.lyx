@@ -1,0 +1,3244 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage[titletoc,title]{appendix}
+\usepackage{acronym}
+%\usepackage{listing}
+\usepackage[algoruled,linesnumbered]{algorithm2e}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding utf8x
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part*
+I introduzione al problema e fondamenti teorici
+\end_layout
+
+\begin_layout Section
+Introduzione
+\end_layout
+
+\begin_layout Subsection
+Struttura della tesi
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduzione al problema
+\end_layout
+
+\begin_layout Standard
+Trovare documenti che corrispondano a quanto si sta cercando rappresenta
+ ogni giorno una sfida sempre più grande.
+ La conoscenza continua ad essere digitalizzata ed archiviata in formati
+ molto differenti fra loro ed estremamente difficili da analizzare utilizzando
+ dei calcolatori: notizie, blog, pagine web, articoli scientifici, video
+ e file audio solo solo alcuni esempi di questi.
+ Per questa ragione è necessario ​sviluppare nuovi strumenti di calcolo
+ in grado di automatizzare l'organizzazione, la ricerca e la comprensione
+ di questa grande quantità di informazioni.
+ 
+\end_layout
+
+\begin_layout Standard
+Fino ad ora, per cercare informazioni sul web, l'utente ha avuto a disposizione
+ due strumenti: la 
+\begin_inset Quotes eld
+\end_inset
+
+ricerca
+\begin_inset Quotes erd
+\end_inset
+
+ e i 
+\begin_inset Quotes eld
+\end_inset
+
+link
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Esso digita delle parole chiave all'interno di un motore di ricerca le
+ quali permettono di trovare un insieme di documenti collegati alle parole
+ digitate.
+ Questo modo di reperire informazioni è efficace ma incompleto.
+\end_layout
+
+\begin_layout Standard
+L'utente può cercare ed esplorare documenti sulla base del tema trattato,
+ che potrebbe essere sia specifico sia un argomento più generale; potrebbe
+ inoltre voler capire come questo argomento si evolve nel tempo o come è
+ correlato ad altri temi.
+ Per far questo non è più sufficiente il solo utilizzo delle parole chiave,
+ ma è necessario prima individuare il tema di interesse ed in seguito esaminare
+ i documenti ad esso collegati.
+ Dal momento che online sono disponibili enormi quantità di documenti, è
+ impossibile effettuare a mano
+\series bold
+ 
+\series default
+le operazioni descritte in precedenza.
+ Per automatizzare questo processo sono stati sviluppati modelli probabilistici,
+ detti topic model, che hanno come obiettivo quello di scoprire i temi trattati
+ nei documenti di archivi digitali di grandi dimensioni e di classificarli
+ in base ad essi analizzando le singole parole di tutti i documenti di interesse.
+ I topic model non richiedono inoltre che i documenti oggetto dell'analisi
+ siano preventivamente etichettati.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+inserire figura 3 articolo Blei 
+\begin_inset Quotes eld
+\end_inset
+
+probabilistic topic model 
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Stato dell'arte
+\end_layout
+
+\begin_layout Subsection
+Information Retrival
+\end_layout
+
+\begin_layout Standard
+Supponiamo di avere a disposizione centinaia di migliaia documenti di testo,
+ per esempio libri scannerizzati.
+ L'obiettivo è quello di rendere questi dati accessibili all'utente.
+ Quest'ultimo, digitando alcune parole chiave, deve poter ottenere risultati
+ rilevanti, visualizzati in un ordine prestabilito, che serviranno da entry
+ point ai testi integrali.
+ Inoltre, l'utente deve essere avvisato quando nuovi documenti, simili ai
+ risultati ottenuti in precedenza, sono aggiunti alla collezione.
+ Infine deve anche poter navigare attraverso i dati ottenuti senza dover
+ ricorrere a filtri.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Se si vuole progettare ed implementare un sistema conforme alle specifiche
+ descritte ci si troverà ad affrontare i seguenti problemi:
+\end_layout
+
+\begin_layout Itemize
+come abbinare il significato di una query a quello di un documento di testo
+ nel caso di sinonimi (parole diverse con lo stesso significato) o omografi
+ (parole che si scrivono allo stesso modo con significati diversi); 
+\end_layout
+
+\begin_layout Itemize
+come classificare i risultati; 
+\end_layout
+
+\begin_layout Itemize
+come trovare documenti simili; 
+\end_layout
+
+\begin_layout Itemize
+come processare terabytes di dati quando l'utente si aspetta risultati immediati.
+\end_layout
+
+\begin_layout Standard
+Questi ed altre questioni sono l'oggetto di studio dell'information retrieval
+ (IR) che si occupa di “ricercare documenti, informazioni all'interno dei
+ documenti, e metadati dei documenti”
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+ http://en.wikipedia.org/wiki/Information_retrieval 
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I principali obiettivi dell'IR sono: 
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+adhoc retrieval
+\shape default
+: attività di recupero standard in cui l'utente specifica le informazioni
+ necessarie attraverso una query che avvia una ricerca;
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+collaborative filtering
+\shape default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+http://en.wikipedia.org/wiki/Collaborative_filtering 
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+browsing
+\shape default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+http://en.wikipedia.org/wiki/Browsing
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Il modo più semplice per abbinare i termini di una adhoc retrieval query
+ ai documenti, è quello di effettuare una scansione lineare dei documenti
+ integrali che indica i punti dei documenti in cui i termini compaiono.
+ Questo implica che il sistema scansioni l'intera collezione ad ogni nuova
+ query, rendendo questo approccio irrealizzabile per banche dati molto grandi.
+ 
+\end_layout
+
+\begin_layout Standard
+Una soluzione generale a questo problema è quella di costruire in anticipo
+ un indice dei documenti.
+ Un indice è un dizionario ordinato di termini che punta alle sezioni dei
+ documenti della collezione dove compaiono.
+ Pertanto, per ogni termine nel vocabolario della collezione, l'indice indica
+ in quale documento compare, con che frequenza appare nel documento o nell'inter
+a collezione.
+ (
+\series bold
+ ponweiser see Figure 2.1
+\series default
+) Questi indici sono anche chiamati inverted indexes 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+http://en.wikipedia.org/wiki/Inverted_index
+\end_layout
+
+\end_inset
+
+perché sono costruiti ordinando un “forward index”, ovvero una lista di
+ parole per ciascun documento.
+ 
+\end_layout
+
+\begin_layout Subsection
+Text Mining
+\end_layout
+
+\begin_layout Standard
+Con il termine Text Mining si fa riferimento al processo di estrapolazione
+ delle informazioni di alta qualità dal testo, ovvero di quelle informazioni
+ ottenute attraverso l'apprendimento di un modello (pattern).
+ Le operazioni di text mining di solito includono
+\end_layout
+
+\begin_layout Itemize
+processi di strutturazione del testo di input (parsing);
+\end_layout
+
+\begin_layout Itemize
+individuazione di pattern all'interno di dati strutturati valutazione ed
+ interpretazione.
+\end_layout
+
+\begin_layout Standard
+Con “alta qualità” delle informazioni si intende una combinazione di relevance
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+ en.wikipedia.org/wiki/Relevance_(information_retrieval)
+\end_layout
+
+\end_inset
+
+ e interestingness, ovvero di misure che indicano quanto un documento o
+ un set di documenti recuperati sia coerente con le informazioni che l'utente
+ sta cercando.
+\end_layout
+
+\begin_layout Standard
+Gli obiettivi più comuni del text mining sono:
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+categorizzazione di
+\shape default
+ 
+\shape italic
+documenti
+\shape default
+: insieme di attività che permettono di classificare testi digitali, scritti
+ in linguaggio naturale, assegnando in maniera automatica collezioni di
+ documenti ad una o più classi, ciascuna delle quali appartine ad un "set
+ di classi" predefinito;
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+concept mining: 
+\shape default
+attività che consente l'estrazione di concetti da artefatti.
+ Siccome questi artefatti sono tipicamente sequenze non strutturate di parole
+ ed altri simboli (piuttosto che concetti) il problema non è facile da risolvere
+, ma può fornire intuizioni sul significato, la provenienza e la somiglianza
+ dei documenti;
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+produzione di tassonomie
+\shape default
+: processo generativo di strutture ad albero di istanze (o categorie) appartenen
+ti ad un dato gruppo di concetti.
+ A capo della struttura c'è un'istanza singola, il nodo radice, le cui proprietà
+ si applicano a tutte le altre istanze della gerarchia (sotto-categorie).
+ I nodi sottostanti a questa radice costituiscono categorie più specifiche
+ le cui proprietà caratterizzano il sottogruppo del totale degli oggetti
+ classificati nell'intera tassonomia;
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+sentiment analysis
+\shape default
+: tecniche che permettono di individuare ed estrarre informazioni personali
+ dai dati di input.
+ In generale l'obiettivo è quello di determinare l'atteggiamento di uno
+ speaker o di uno scrittore rispetto ad un dato argomento, generalemente
+ espresso tramite un voto o una opinione; 
+\end_layout
+
+\begin_layout Itemize
+
+\shape italic
+document summarization
+\shape default
+: insieme di tecniche che permettono di riassumere il contenuto di un documento
+ di testo in modo automatico, in modo da creare un sommario che conserva
+ i punti più importanti del documento originale.
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fondamenti matematici
+\end_layout
+
+\begin_layout Subsection
+Disuguaglianza di Jensen
+\end_layout
+
+\begin_layout Standard
+La disuguaglianza di Jensen mette in relazione l'integrale di una funzione
+ convessa con la funzione stessa calcolata sul valore dell'integrale.
+ La disuguaglianza, inoltre, generalizza l'idea che la linea secante di
+ una funzione convessa si trova sopra il grafico di tale funzione, che è
+ la disuguaglianza di Jensen per due punti: la linea secante è costituita
+ da medie ponderate della funzione convessa, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $tf(x_{1})+(1-t)f(x_{2})$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+mentre il grafico della funzione è la funzione convessa della media ponderata
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(tx_{1}+(1-t)x_{2})$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Nell'ambito della teoria della probabilità, la disuguaglianza è generalmente
+ enunciata nella seguente forma: if 
+\begin_inset Formula $X$
+\end_inset
+
+ è una variabile casuale e 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ è una funzione convessa, allora
+\begin_inset Formula 
+\[
+\varphi(\ensuremath{\mathbb{E}[X]})\leq\mathbb{E}[\varphi(X)]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+KL-divergence
+\end_layout
+
+\begin_layout Standard
+La 
+\begin_inset Formula $KL$
+\end_inset
+
+-divergence è una misura non-simmetrica della differenza tra due distribuzioni
+ di probabilità 
+\begin_inset Formula $P$
+\end_inset
+
+ e 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+ In particolare la 
+\begin_inset Formula $KL$
+\end_inset
+
+-divergence di 
+\begin_inset Formula $Q$
+\end_inset
+
+ da 
+\begin_inset Formula $P$
+\end_inset
+
+, indicata con 
+\begin_inset Formula $D_{KL}(P||Q)$
+\end_inset
+
+, è una misura dell'informazione persa quando
+\begin_inset Formula $Q$
+\end_inset
+
+ è usata per approssimare 
+\begin_inset Formula $P$
+\end_inset
+
+: la divergenza misura il numero atteso di bit extra necessari per codificare
+ un campione da 
+\begin_inset Formula $P$
+\end_inset
+
+ quando è usato un codice basato su 
+\begin_inset Formula $Q$
+\end_inset
+
+, piuttosto che usare un codice basato su 
+\begin_inset Formula $P$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La KL-divergence per la variational inference è:
+\begin_inset Formula 
+\[
+D_{KL}(q\,\Vert\, p)=E_{q}\left[log\frac{q(Z)}{p(Z|x)}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abbiamo tre casi:
+\end_layout
+
+\begin_layout Enumerate
+caso migliore quando i valori di 
+\begin_inset Formula $q$
+\end_inset
+
+ e 
+\begin_inset Formula $p$
+\end_inset
+
+ sono entrambi alti: l'argomento del logaritmo tende a 
+\begin_inset Formula $1$
+\end_inset
+
+, allora il logaritmo tende a 
+\begin_inset Formula $0$
+\end_inset
+
+ quindi 
+\begin_inset Formula $q$
+\end_inset
+
+ e 
+\begin_inset Formula $p$
+\end_inset
+
+ tendono a covnergere; 
+\end_layout
+
+\begin_layout Enumerate
+caso medio quando il valore di 
+\begin_inset Formula $q$
+\end_inset
+
+ è alto e 
+\begin_inset Formula $p$
+\end_inset
+
+ è basso
+\end_layout
+
+\begin_layout Enumerate
+caso peggiore quando il valore di 
+\begin_inset Formula $q$
+\end_inset
+
+ è basso
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Modelli grafici e inferenza a posteriori
+\end_layout
+
+\begin_layout Subsection
+Modelli grafici a variabili latenti
+\end_layout
+
+\begin_layout Standard
+Un modello grafico diretto fornisce una descrizione sintetica della fattorizzazi
+one di una distribuzione congiunta: i 
+\shape italic
+nodi
+\shape default
+ rappresentano le variabili casuali, gli 
+\shape italic
+archi
+\shape default
+ le loro possibili dipendenze e i 
+\shape italic
+riquadri
+\shape default
+ sottostrutture che vengono replicate.
+ 
+\end_layout
+
+\begin_layout Standard
+I modelli grafici sono utilizzati per descrivere 
+\shape italic
+modelli a variabili latenti.
+ 
+\shape default
+Questi modelli permettono di sviluppare complicate distribuzioni, dove i
+ dati interagiscono con variabili 
+\shape italic
+non osservate
+\shape default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Per esempio, la distribuzione in figura rappresenta una 
+\shape italic
+mixture distribution
+\shape default
+ formata dalla combinazione di distribuzioni di Gauss con valori attesi
+ 
+\begin_inset Formula $\mu_{1}=-2,5$
+\end_inset
+
+, 
+\begin_inset Formula $\mu_{2}=4$
+\end_inset
+
+ e 
+\begin_inset Formula $\mu_{3}=8$
+\end_inset
+
+.
+ Un data point è disegnato scegliendo prima una variabile nascosta 
+\begin_inset Formula $Z\in\{1,2,3\}$
+\end_inset
+
+ da una distribuzione multinomiale, ed in seguito disegnando il data point
+ a partire da 
+\begin_inset Formula $N(\mu_{z},1)$
+\end_inset
+
+.
+ Questo esempio è illsutrato graficamente (
+\series bold
+inserire figura 2.1 entrambe pag 5 thesis Blei
+\series default
+)
+\end_layout
+
+\begin_layout Standard
+L'obiettivo principale dei modelli a variabili nascoste per l'analisi dei
+ dati è quello di calcolare l'
+\shape italic
+inferenza a posteriori
+\shape default
+, determinando la distribuzione della variabili latenti condizionata ai
+ dati osservati.
+ L'inferenza a posteriori può essere vista come l'inversa del processo generativ
+o illustrato dal modello grafico.
+ 
+\end_layout
+
+\begin_layout Standard
+Tipicamente, i paramentri del modello non sono osservati, e una parte del
+ problema di inferenza consiste nel calcolare la distribuzione a posteriori
+ condizionata ai dati.
+ Nei modelli bayesiani gerarchici si utilizzano metodologie bayesiane empiriche,
+ e si cercano i punti stimati degli 
+\shape italic
+iperparametri
+\shape default
+ per mezzo della verosiiglianza.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Famiglie esponenziali
+\end_layout
+
+\begin_layout Standard
+Tutte le variabili casuali considerate sono distribuite in accordo con la
+ famiglia delle
+\shape italic
+ distribuzioni esponenziali
+\shape default
+.
+ Questa famiglia di distribuzioni ha la seguente forma:
+\begin_inset Formula 
+\[
+p(x\,|\,\eta)=h(x)exp\{\eta^{T}t(x)-a(\eta)\}
+\]
+
+\end_inset
+
+dove 
+\begin_inset Formula $\eta$
+\end_inset
+
+ è il parametro naturale 
+\begin_inset Formula $t(x)$
+\end_inset
+
+ è la statistica sufficiente
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+una statistica è sufficiente rispetto ad un modello statistico e al paramentro
+ associato se nessun'altra stitistica calcolata sullo stesso campione fornisce
+ maggiori informazioni sul valore dei parametri
+\end_layout
+
+\end_inset
+
+ per 
+\begin_inset Formula $\eta$
+\end_inset
+
+ e 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $a(\eta)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang italian
+ è il logaritmo della 
+\shape italic
+partition function
+\shape default
+:
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+http://en.wikipedia.org/wiki/Partition_function_(mathematics)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a(\eta)=log\int h(x)exp\{\eta^{T}t(x)\}dx
+\]
+
+\end_inset
+
+Le derivate di 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $a(\eta)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang italian
+ sono i cumulanti di 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $t(x)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang italian
+.
+ In particolare le prime due derivate sono:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a'(\eta)=E_{\eta}[t(X)]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a''(\eta)=Var_{\eta}[t(X)]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le funzioni 
+\begin_inset Formula $a_{\eta}$
+\end_inset
+
+ e 
+\begin_inset Formula $h(x$
+\end_inset
+
+) sono determinate dalla forma e dalla dimensione di 
+\begin_inset Formula $t(x)$
+\end_inset
+
+: per esempio se 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+ e 
+\begin_inset Formula $t(x)=(x,x^{2})$
+\end_inset
+
+ allora la corrispondente famiglia esponenziale è guassiana.
+ Oppure se 
+\begin_inset Formula $t(x)$
+\end_inset
+
+ è un vettore unidimensionale con tutti zeri ed un solo uno, la corrispondente
+ famiglia esponenziale è multinomiale.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Famiglie esponenziali coniugate
+\end_layout
+
+\begin_layout Standard
+In un modello bayesiano gerarchico, è necessario specificare una distribuzione
+ a priori di ciascun paramentro.
+\end_layout
+
+\begin_layout Standard
+Sia 
+\begin_inset Formula $X$
+\end_inset
+
+ una variabile casuale distribuita in accordo con una famiglia esponenziale
+ con paramentro naturale 
+\begin_inset Formula $\eta$
+\end_inset
+
+ e 
+\begin_inset Formula $a_{\eta}$
+\end_inset
+
+ logaritmo della partition function
+\shape italic
+.
+ 
+\shape default
+Una distribuzione
+\shape italic
+ a priori coniugata
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+se le distribuzioni a posteriori 
+\begin_inset Formula $p(\theta\,|\, x)$
+\end_inset
+
+ sono nella stessa famiglia della distribuzione a priori 
+\begin_inset Formula $p(\theta)$
+\end_inset
+
+, la distribuzione a priori e quella a posteriori sono quindi chiamate 
+\shape italic
+distribuzioni coniugate
+\shape default
+, and quella a priori è chaiama 
+\shape italic
+distribuzione coniugata a priori
+\shape default
+ per la funzione di verosimiglianza
+\end_layout
+
+\end_inset
+
+ 
+\shape default
+di 
+\begin_inset Formula $\eta$
+\end_inset
+
+ con paramentro naturale
+\begin_inset Formula $\lambda$
+\end_inset
+
+, ha la forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\eta\,|\,\lambda)=h(\eta)exp\{\lambda_{1}^{T}+\lambda_{2}(-a(\eta))-a(\lambda)\}
+\]
+
+\end_inset
+
+Il parametro 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ ha dimensione 
+\begin_inset Formula $dim(\eta)+1$
+\end_inset
+
+ e la statistica sufficiente è 
+\begin_inset Formula $t(n)=(\eta-a(\eta))$
+\end_inset
+
+.
+ Inoltre si decompone 
+\begin_inset Formula $\lambda=(\lambda_{1},\lambda_{2})$
+\end_inset
+
+ tale che 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ contiene la prima componente della 
+\begin_inset Formula $dim(\eta)$
+\end_inset
+
+ e 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+ è uno scalare.
+ 
+\end_layout
+
+\begin_layout Standard
+Scegliere come distribuzioni a priori una distribuzione coniugate è una
+ scelta conveniente perché la corrispondente distribuzione a posteriori
+ avrà la stessa forma.
+\end_layout
+
+\begin_layout Subsubsection
+Famiglia esponenziale condizionata
+\end_layout
+
+\begin_layout Standard
+In un modello grafico diretto, la distribuzione di una particolare variabile,
+ rappresentata da un nodo del grafo, dipende solo dal suo 
+\shape italic
+Markov blanket
+\shape default
+, ovvero dall'insieme che contiene i nodi genitori, i nodi figli e i nodi
+ genitori dei figli.
+ Per facilitare il calcolo dell'inferenza a posteriori, verranno considerati
+ modelli per i quali la distribuzione condizionata di ciascun nodo, dato
+ il suo markov blanket, appartiene alla famiglia di distribuzioni esponenziali.
+ 
+\end_layout
+
+\begin_layout Standard
+Una possibile sotto-struttura che soddisfa questo requisito è la famiglia
+ esponenziale-coniugata illustrata in 
+\series bold
+figura 2.2 tesi Blei
+\series default
+.
+ Condizionando su 
+\begin_inset Formula $\eta$
+\end_inset
+
+, la distribuzione 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+ appartiene alla famiglia esponenziale.
+ 
+\end_layout
+
+\begin_layout Standard
+Una seconda possibilità è quella di rendere la distribuzione di probabilità
+ di una variabile una 
+\shape italic
+mistura
+\shape default
+ di distribuzioni appartenenti ad una famiglia esponenziale.
+ Questa importante sotto-struttura è illustrata in 
+\series bold
+figura 2.3 tesi Blei pag 10
+\series default
+, dove 
+\begin_inset Formula $\eta_{1:K}$
+\end_inset
+
+ sono i parametri della famiglia esponenziale e 
+\begin_inset Formula $\theta$
+\end_inset
+
+ è un paramentro multinomiale 
+\begin_inset Formula $K$
+\end_inset
+
+-dimensionale.
+ Le variabili 
+\begin_inset Formula $X_{1:N}$
+\end_inset
+
+ possono essere 
+\series bold
+drawn 
+\series default
+attraverso un processo generativo a due fasi:
+\end_layout
+
+\begin_layout Enumerate
+scegli 
+\begin_inset Formula $Z_{n}$
+\end_inset
+
+ da 
+\begin_inset Formula $Mult(\theta)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+scegli 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+ dalla sitribuzione indicizzata dai valori 
+\begin_inset Formula $p(x_{n}|\eta_{z}{}_{_{n}}$
+\end_inset
+
+
+\begin_inset Formula $)$
+\end_inset
+
+.
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Il modello: latent Dirichlet allocation
+\end_layout
+
+\begin_layout Standard
+Latent Dirichlet Allocation (LDA) è un modello probabilistico generativo
+ per collezioni di dati discreti.
+ LDA può anche essere visto come un modello bayesiano gerarchico a tre livelli,
+ in cui ciascun oggetto della collezione è modellato come una mistura finita
+ su un insieme di argomenti (topic).
+ Ciascun topic è, a sua volta, modellato come una mistura finita su insieme
+ di probabilità sui topic.
+\end_layout
+
+\begin_layout Standard
+LDA può essere applicato non solo per risolvere problemi su documenti di
+ testo, ma anche per problemi i cui dati da analizzare sono immagini o altri
+ tipi di dati.
+\end_layout
+
+\begin_layout Subsection
+Notazione e terminologia
+\end_layout
+
+\begin_layout Standard
+Per il modello vengono formalmente definiti i seguenti termini: 
+\end_layout
+
+\begin_layout Itemize
+una 
+\shape italic
+parola
+\series bold
+\shape default
+ 
+\series default
+
+\begin_inset Formula $w$
+\end_inset
+
+ è l'unità di base per dati discreti, definita come un elemento di un vocabolari
+o indicizzato da {1,2, ...
+ , V}.
+ Le parole vengono rappresentate da vettori unitari che hanno un singolo
+ componente uguale ad 1 e tutti gli altri uguali a 0.
+ Quindi la 
+\shape italic
+
+\begin_inset Formula $v$
+\end_inset
+
+
+\shape default
+-esima parola del vocabolorio è rappresentata da un 
+\begin_inset Formula $v$
+\end_inset
+
+-vettore 
+\begin_inset Formula $w$
+\end_inset
+
+ tale che 
+\begin_inset Formula $w^{v}=1$
+\end_inset
+
+ e 
+\begin_inset Formula $w^{u}=0$
+\end_inset
+
+ per 
+\begin_inset Formula $u\neq v$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+un 
+\shape italic
+documento
+\shape default
+ 
+\series bold
+
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+
+\series default
+ è una sequenza di 
+\shape italic
+N
+\shape default
+ parole 
+\begin_inset Formula $w$
+\end_inset
+
+= 
+\begin_inset Formula $(w_{1,}w_{2},...,w_{N})$
+\end_inset
+
+, dove 
+\begin_inset Formula $w_{N}$
+\end_inset
+
+ è l'
+\begin_inset Formula $N$
+\end_inset
+
+-esima parola della sequenza.
+\end_layout
+
+\begin_layout Itemize
+un 
+\shape italic
+corpus
+\shape default
+ 
+\begin_inset Formula $D$
+\end_inset
+
+ è una collezione di 
+\shape italic
+M
+\shape default
+ documenti 
+\shape italic
+
+\begin_inset Formula $D=\{\mathbf{w_{1},w_{2},...,w_{M}}\}$
+\end_inset
+
+ 
+\shape default
+dove
+\shape italic
+ 
+\begin_inset Formula $\mathbf{w}_{\mathbf{M}}$
+\end_inset
+
+ 
+\shape default
+è l'
+\begin_inset Formula $M$
+\end_inset
+
+-esimo documento della collezione.
+\end_layout
+
+\begin_layout Standard
+L'obiettivo è quello di trovare un modello probabilistico che non solo assegna
+ un'alta probabilità agli oggetti della collezione, ma assegna un'alta probabili
+tà a documenti 
+\begin_inset Quotes eld
+\end_inset
+
+simili
+\begin_inset Quotes erd
+\end_inset
+
+ non appartenenti alla collezione.
+ 
+\end_layout
+
+\begin_layout Subsection
+Processo generativo 
+\end_layout
+
+\begin_layout Standard
+Latent Dirichlet Allocation (LDA) è un modello probabilsitico generativo
+ di collezioni di documenti.
+ L'idea di base è quella che i documenti sono rappresentati come una mistura
+ casuale su argomenti (topic) nascosti, dove ciascun topic è caratterizzato
+ da una distribuzione sulle parole.
+\end_layout
+
+\begin_layout Standard
+LDA assume il seguente processo generativo per ciascun documento 
+\series bold
+
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ 
+\series default
+nel corpus 
+\begin_inset Formula $D$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+scegli 
+\begin_inset Formula $N\,|\,\xi\sim Poisson(\xi)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+scegli 
+\begin_inset Formula $\theta\,|\,\alpha\sim Dir(\alpha)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+per 
+\begin_inset Formula $n\in\{1,...,N\}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+scegli un topic 
+\begin_inset Formula $Z_{n}\,|\,\theta\sim Multinomiale(\theta)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+scegli una parola 
+\begin_inset Formula $W_{n}\,|\,\{z_{n,}\beta_{1:K}\}\sim Mult(\beta_{z_{n}})$
+\end_inset
+
+ .
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+In questo modello sono state fatte delle assunzioni:
+\end_layout
+
+\begin_layout Itemize
+la dimensionalità 
+\begin_inset Formula $k$
+\end_inset
+
+ della distribuzione di Dirichlet, e quindi della variabile dei topic 
+\begin_inset Formula $Z$
+\end_inset
+
+, è nota e fissa;
+\end_layout
+
+\begin_layout Itemize
+le probabilità delle parole sono parametrizzate da una matrice 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+ di dimensione 
+\begin_inset Formula $k\times V$
+\end_inset
+
+ dove 
+\begin_inset Formula $\beta_{ij}=p(w^{j}=1\,|\, z^{i}=1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+L'assunzione di Poission su 
+\begin_inset Formula $N$
+\end_inset
+
+ non è critica, in quanto il numero delle parole è indipendente dalle altre
+ variabili generative 
+\series bold
+
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+ 
+\series default
+e 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+La distribuzione di Dirichlet 
+\end_layout
+
+\begin_layout Standard
+Una variabile aleatoria di Dirichlet 
+\begin_inset Formula $\theta$
+\end_inset
+
+, 
+\begin_inset Formula $k-$
+\end_inset
+
+dimensionale, può assumere valori nel 
+\begin_inset Formula $(k-1)-$
+\end_inset
+
+simplesso (un 
+\begin_inset Formula $k$
+\end_inset
+
+-vettore 
+\begin_inset Formula $\theta$
+\end_inset
+
+ prende valori nel 
+\begin_inset Formula $(k-1)$
+\end_inset
+
+-simplesso se 
+\begin_inset Formula $\theta_{i}\geq0,\,{\displaystyle \sum_{i=1}^{k}\theta_{i}=1}$
+\end_inset
+
+ ) ed ha la seguente densità su questo simplesso:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(\theta\,|\,\alpha)=\frac{{\displaystyle \Gamma({\displaystyle {\scriptstyle \sum}_{i=1}^{k}\alpha_{i}})}}{\prod_{i=1}^{k}\Gamma(\alpha_{i})}\theta_{1}^{\alpha_{1}-1},\,...\,,\,\theta_{k}^{\alpha_{k}-1}\label{eq:federica}
+\end{equation}
+
+\end_inset
+
+dove il parametro
+\begin_inset Formula $\alpha$
+\end_inset
+
+ è un 
+\begin_inset Formula $k$
+\end_inset
+
+-vettore con componenti 
+\begin_inset Formula $\alpha{}_{i}>0$
+\end_inset
+
+ e 
+\begin_inset Formula $\Gamma(x)$
+\end_inset
+
+ è la Funzione Gamma.
+ La distribuzione di Dirichlet sul simplesso è una scelta conveniente: appartien
+e alla famiglia esponenziale, ha un numero finito di statistiche sufficienti
+ ed è coniugata alla distribuzione multinomiale.
+ 
+\end_layout
+
+\begin_layout Standard
+Un primo approccio per stabilire la coniugazione tra la distribuzione di
+ Dirichlet e la multinomiale è quello di considerare la rappresentazione
+ della loro famiglia esponenziale, oppure usando direttamente l'equazione
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:federica"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Per prima cosa notare che
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E[\theta\,|\,\alpha]=\frac{\alpha}{\sum_{j=1}^{K}\alpha_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $\theta\,|\,\alpha\sim Dir(\alpha)$
+\end_inset
+
+ e 
+\begin_inset Formula $Z\,|\,\theta\sim Multi(\theta)$
+\end_inset
+
+, allora
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula 
+\[
+p(\theta\,|\, z=i,\alpha)=\frac{p(z=i\,|\,\theta)p(\theta\,|\,\alpha)}{p(z=i\,|\,\alpha)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left(\frac{\sum_{j=1}^{K}\alpha_{j}}{\alpha_{i}}\right)\left(\frac{\Gamma(\sum_{j=1}^{K}\alpha_{j})}{\prod_{j=1}^{K}\Gamma(\alpha_{j})}\theta_{1}^{\alpha_{1}-1}...\theta_{i}^{\alpha_{i}-1}...\theta_{K}^{\alpha_{K}-1}\right)\theta_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula 
+\[
+=\frac{\Gamma(1+\sum_{j=1}^{K}\alpha_{j})}{\prod_{j=1}^{K}\Gamma(\alpha_{j}+\delta(j=i))}\theta_{1}^{\alpha_{1}-1}...\theta_{i}^{\alpha_{i}-1}...\theta_{K}^{\alpha_{K}-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=Dir(\alpha_{1},...,\alpha_{i}+1,...,\alpha_{K})
+\]
+
+\end_inset
+
+Da cui segue che 
+\begin_inset Formula 
+\[
+\theta\,|\,\{z_{1:N},\alpha\}\sim Dir(\alpha_{1}+n_{1}(z_{1:N}),...,\alpha_{K}+n_{k}(z_{1:N}))
+\]
+
+\end_inset
+
+dove
+\begin_inset Formula $n_{i}(z_{1:N})$
+\end_inset
+
+ è il numero di volte che 
+\begin_inset Formula $z{}_{n}=i$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Distribuzione congiunta di un corpus
+\end_layout
+
+\begin_layout Standard
+Dati i parametri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+, la probabilità congiunta di una mistura di topic 
+\begin_inset Formula $\theta$
+\end_inset
+
+, un insieme 
+\series bold
+
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+
+\series default
+ di 
+\begin_inset Formula $N$
+\end_inset
+
+ topic e di un insieme 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ di 
+\begin_inset Formula $N$
+\end_inset
+
+ parole è dato da
+\begin_inset Formula 
+\[
+p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta_{1:K})=p(\theta\,|\,\alpha){\displaystyle \prod_{n=1}^{N}p(z_{n}\,|\,\theta)p(w_{n}\,|\, z_{n},\beta_{1:K})}
+\]
+
+\end_inset
+
+dove 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p(z_{n}\,|\,\theta)$
+\end_inset
+
+ è 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ per l'unico 
+\begin_inset Formula $i$
+\end_inset
+
+ tale che 
+\begin_inset Formula $z_{n}^{i}=1$
+\end_inset
+
+ e 
+\begin_inset Formula $p(w_{n}\,|\, z_{n},\beta)$
+\end_inset
+
+ è il componente analogo in 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+.
+ Integrando su 
+\begin_inset Formula $\theta$
+\end_inset
+
+ e sommando su tutti i valori di 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+, otteniamo la distribuzione marginale di un documento
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(\mathbf{w}\,|\,\alpha,\beta_{1:K})=\int p(\theta\,|\,\alpha)\left(\prod_{n=1}^{N}\sum_{z_{n}}p(z_{n}\,|\,\theta)p(w_{n}\,|\, z_{n},\beta_{1:K})\right)\, d\theta\label{eq:pippo}
+\end{equation}
+
+\end_inset
+
+Infine, moltiplicando le probabilità marginali di ciascun documento, otteniamo
+ la probabilità di un corpus di documenti
+\begin_inset Formula 
+\[
+p(D\,|\,\alpha,\beta_{1:K})=\prod_{d=1}^{M}\int p(\theta_{d}\,|\,\alpha)\left(\prod_{n=1}^{N_{d}}\sum_{z_{dn}}p(z_{dn}\,|\,\theta_{d})p(w_{dn}\,|\, z_{dn},\beta_{1:K})\right)\, d\theta_{d}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+LDA è rappresentato come un modello grafico probabilistico.
+ Come mostrato in figura 
+\series bold
+(
+\lang english
+figura 3.1 pag 24 tesi Blei 
+\lang italian
+),
+\series default
+ è un modello bayesiano gerarchico a tre livelli.
+ I parametri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+ appartengono al livello della collezione, le variabili 
+\begin_inset Formula $\theta_{d}$
+\end_inset
+
+ sono variabili del livello dei documenti, definite per ciascun documento
+ della collezione.
+ Infine, le variabili 
+\begin_inset Formula $z_{dn}$
+\end_inset
+
+ e 
+\begin_inset Formula $w_{dn}$
+\end_inset
+
+ appartengono al livello delle parole e sono definite per ciascuna parola
+ di ogni documento della collezione.
+ 
+\end_layout
+
+\begin_layout Standard
+È importante sottolineare le differenze fra LDA da un semplice modello di
+ clustering di Dirichlet multinomiale.
+ Un classico modello di clustering implicherebbe un modello a due livelli
+ nel quale la distribuzione 
+\begin_inset Formula $Dir(\alpha)$
+\end_inset
+
+ è calcolata una sola volta per la collezione di documenti, una variabile
+ di clustering multinomiale è selezionata una volta per ciascun documento
+ e un insieme di parole sono selezionate per il documento a seconda della
+ variabile di cluster.
+ Questo modello di clustering, come molti altri, assume che un documento
+ possa essere associato ad un solo topic.
+ Invece LDA implica tre livelli e, in particolare, il nodo che rappresenta
+ i topic è ripetutamente 
+\series bold
+sampled 
+\series default
+all'interno del documento.
+ Sotto questo modello i documenti possono essere associati a più topic.
+ 
+\end_layout
+
+\begin_layout Subsection
+LDA e sostituibilità
+\end_layout
+
+\begin_layout Standard
+Un insieme finito di variabili aleatorie
+\begin_inset Formula $\{z_{1,}z_{2},\,...\,,z_{n}\}$
+\end_inset
+
+ è detto 
+\shape italic
+scambiabile 
+\shape default
+se la distribuzione congiunta è invariante alle permutazioni.
+ Se 
+\begin_inset Formula $\pi$
+\end_inset
+
+ è una permutazione di interi da 
+\begin_inset Formula $1$
+\end_inset
+
+ a 
+\begin_inset Formula $N$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+p(z_{1},\,...\,,z_{N})=p(z_{\pi(1)},\,...\,,z_{\pi(N)})
+\]
+
+\end_inset
+
+Una sequenza di variabili aleatorie è 
+\shape italic
+infinitamente scambiabile 
+\shape default
+se ciascuna sottosequenza finita è scambiabile.
+\begin_inset Newline newline
+\end_inset
+
+La rappresentazione del Teorema di De Finetti afferma che la distribuzione
+ congiunta di una sequenza infinitamente scambiabile di variabili casuali
+ 
+\series bold
+is as if 
+\series default
+un parametro casuale è stato generato da una qualche distribuzione ed in
+ seguito le variabili casuali in questione, che sono 
+\shape italic
+indipendenti
+\shape default
+ ed 
+\shape italic
+identicamente distribuite
+\shape default
+, sono condizionate ai parametri.
+ 
+\end_layout
+
+\begin_layout Standard
+In LDA assumiamo che le parole siano generate dai topic (in base a fisse
+ distribuzioni condizionate) e che questi topic siano infinitamente scambiabili
+ all'interno di un documento.
+ 
+\end_layout
+
+\begin_layout Standard
+Dal Teorema di de Finetti, la probabilità di una sequenza di parole e topic
+ deve avere la seguente forma:
+\begin_inset Formula 
+\[
+p(\mathbf{w\,}|\,\mathbf{z})=\int p(\theta)\left(\prod_{n=1}^{N}p(z_{n}\,|\,\theta)p(w_{n}\,|\, z_{n})\right)\, d\theta
+\]
+
+\end_inset
+
+dove 
+\begin_inset Formula $\theta$
+\end_inset
+
+ è il parametro casuale di una distribuzione multinomiale sui topic.
+ 
+\end_layout
+
+\begin_layout Subsection
+Continuous mixture of unigram 
+\end_layout
+
+\begin_layout Standard
+LDA è un modello più complesso dei modelli bayesiani a due livelli.
+ Tuttavia, marginalizzando sulla variabile dei topic 
+\begin_inset Formula $z$
+\end_inset
+
+, possiamo vedere LDA come un modello a due livelli.
+ In particolare definiamo la distribuzione di probabilità sulle parole 
+\begin_inset Formula $p(w|\theta,\beta)$
+\end_inset
+
+ come 
+\begin_inset Formula 
+\[
+p(w\,|\,\theta,\beta_{1:K})=\sum p(w\,|\, z,\beta_{1:K})p(z\,|\,\theta)
+\]
+
+\end_inset
+
+che è una quantità casuale che dipende esclusivamente da 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ Ora è possibile definire il seguente processo generativo per un documento
+ 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+scegli 
+\begin_inset Formula $\theta\,|\alpha\sim Dir(\alpha)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+pwer 
+\begin_inset Formula $n\in\{1,...N\}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+scegli 
+\begin_inset Formula $w_{n}$
+\end_inset
+
+ da 
+\begin_inset Formula $p(w_{n}\,|\,\theta,\beta_{1:K})\sim Mult(\sum_{i=1}^{K}\theta_{i}\beta_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Questo processo definisce la distribuzione marginale di un documento come
+ una 
+\series bold
+continous mixture distribution
+\series default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(\mathbf{w}\,|\,\alpha,\beta_{1:K})=\int p(\theta\,|\,\alpha)\,\left(\prod_{n=1}^{N}p(w_{n}|\,\theta,\mathbf{\beta}_{1:K})\right)\, d\theta
+\end{equation}
+
+\end_inset
+
+ove 
+\begin_inset Formula $p(w_{n}|\,\theta,\mathbf{\beta}_{1:K})$
+\end_inset
+
+ sono le componenti della mistura
+\series bold
+ 
+\series default
+e 
+\begin_inset Formula $p(\theta\,|\,\alpha)$
+\end_inset
+
+ sono i pesi.
+ 
+\end_layout
+
+\begin_layout Standard
+La figura 
+\series bold
+3.2 pag 28
+\series default
+ 
+\series bold
+tesi Blei 
+\series default
+illustra questa interpretazione di LDA: raffigura la distribuzione 
+\begin_inset Formula $p(w\,|\,\alpha,\beta_{1:K})$
+\end_inset
+
+ che è indotta da una particolare istanza di LDA.
+ Questa distribuzione sul 
+\begin_inset Formula $(V-1)$
+\end_inset
+
+-simplesso è raggiunta con solo K +KV paramentri ma rappresenta una struttura
+ multimodale interessante.
+ Questa prospettiva fornisce inoltre connessioni fra i vari componenti dell'anal
+isi, in cui i dati derivano da una distribuzione normale, la cui media è
+ il prodotto interno della variabile nascosta 
+\begin_inset Formula $\theta$
+\end_inset
+
+ e 
+\series bold
+a collection of means 
+\series default
+
+\begin_inset Formula $\beta_{1:K}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Relazione con altri modelli a variabili latenti
+\end_layout
+
+\begin_layout Subsubsection
+Unigram model 
+\end_layout
+
+\begin_layout Standard
+In questo modello, le parole di ciascun documento sono generate in modo
+ indipendente, da una singola distribuzione multinomiale
+\begin_inset Formula 
+\[
+p(\mathbf{w}\,|\,\beta)=\prod_{n=1}^{N}p(w_{n}\,|\,\beta)
+\]
+
+\end_inset
+
+dove 
+\begin_inset Formula $\beta$
+\end_inset
+
+ è una distribuzione multinomiale sulle parole.
+ 
+\series bold
+inserire fig 3a
+\end_layout
+
+\begin_layout Subsubsection
+Mixture of unigram
+\end_layout
+
+\begin_layout Standard
+Se estendiamo l'unigram model con una variabile aleatoria discreta 
+\begin_inset Formula $z$
+\end_inset
+
+, 
+\series bold
+inserire fig 3b pag 1000
+\series default
+ otteniamo un modello chiamato 
+\shape italic
+mixture of unigram
+\shape default
+.
+ In questo modello, ciascun documento è generato scegliendo un topic 
+\begin_inset Formula $z$
+\end_inset
+
+ e dopo generando 
+\begin_inset Formula $N$
+\end_inset
+
+ parole, in modo indipendente l'una dall'altra, dalla distribuzione multinomiale
+ condizionata 
+\begin_inset Formula $p(w\,|\, z)$
+\end_inset
+
+.
+ La probabilità di ciascun documento è quindi
+\begin_inset Formula 
+\[
+p(\mathbf{w\,}|\theta,\beta_{1:K}\mathbf{\,})=\sum_{z}p(z\,|\,\theta)\prod_{n=1}^{N}p(w_{n}\,|\, z,\beta_{1:K})
+\]
+
+\end_inset
+
+dove 
+\begin_inset Formula $\theta$
+\end_inset
+
+ è una singola distribuzione sui 
+\begin_inset Formula $K$
+\end_inset
+
+ topic, che è fissa per l'intero corpus di documenti.
+ Le distribuzioni delle parole 
+\begin_inset Formula $\beta{}_{1:K}$
+\end_inset
+
+ può essere vista come una rappresentazione dei topic assumendo che ciascun
+ documento della collezione presenta esattamente un argomento.
+\end_layout
+
+\begin_layout Standard
+LDA, invece, ammette che in un documento possono essere trattati argomenti
+ diversi in diverse percentuali.
+ Questo implica l'aggiunta di un solo parametro: ci sono 
+\begin_inset Formula $K-1$
+\end_inset
+
+ paramentri nel modello 
+\shape italic
+mixture of unigram
+\shape default
+ associati
+\shape italic
+ 
+\shape default
+a 
+\begin_inset Formula $p(z\,|\,\theta)$
+\end_inset
+
+, 
+\begin_inset Formula $K$
+\end_inset
+
+ parametri in LDA
+\shape italic
+ 
+\shape default
+associati a 
+\begin_inset Formula $p(\theta\,|\,\alpha)$
+\end_inset
+
+ in LDA.
+\end_layout
+
+\begin_layout Subsubsection
+Probabilistic latent semantic indexing (pLSI)
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Probabilisti latent sematic indexing 
+\shape default
+(pLSI) (
+\series bold
+inserire una qualche figura
+\series default
+) assume che una etichetta di un documento 
+\begin_inset Formula $d$
+\end_inset
+
+ e una parola 
+\begin_inset Formula $w_{n}$
+\end_inset
+
+ siano indipendenti se condizionate a un topic nascosto 
+\begin_inset Formula $z$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(d,w_{n}\,|\,\theta_{d},\beta_{1:K})=p(d)\sum_{z}p(w_{n}\,|\, z,\beta_{1:K})p(z\,|\theta_{d})
+\]
+
+\end_inset
+
+dove 
+\begin_inset Formula $\theta_{d}$
+\end_inset
+
+ sono le proporzioni dei topic specifiche per un documento e 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+ è definita come per il modello mixture of unigrams.
+\end_layout
+
+\begin_layout Standard
+pLSI cerca di rilassare l'assunzione, fatta nel modello mixture of unigram,
+ che ciascun documento sia generato da un solo topic.
+ Ovvero prevede la possibilità che un documento tratti più argomenti poiché
+ 
+\begin_inset Formula $\theta{}_{d}$
+\end_inset
+
+ viene utilizzato per dare un peso ai vari topic del documento.
+ Tuttavia, è importante notare che 
+\begin_inset Formula $\theta_{d}$
+\end_inset
+
+ è un parametro e 
+\begin_inset Formula $d$
+\end_inset
+
+ è un indice fittizzio sulla lista dei documenti del 
+\shape italic
+training set
+\shape default
+.
+ Quindi, 
+\begin_inset Formula $d$
+\end_inset
+
+ è una variabile aleatoria multinomiale che può assumere tanti valori quanti
+ sono i documenti del training set e il modello apprende la probabilità
+ 
+\begin_inset Formula $p(z\,|\, d)$
+\end_inset
+
+ solo per i documenti del medesimo training set.
+ Per questa ragione pLSI non è un modello generativo di documenti ben definito;
+ non c'è un modo naturale per utilizzarlo per assegnare la probabilità ad
+ un documento inedito.
+\end_layout
+
+\begin_layout Standard
+Una ultieriore difficoltà nell'applicare questo modello, che deriva dall'utilizz
+o di una distribuzione indicizzata dai documenti del training set, sta nel
+ fatto che il numero dei parametri che devono essere stimati cresce linearmente
+ con il numero dei documenti del training set.
+ I parametri per un modello pLSI di 
+\begin_inset Formula $K$
+\end_inset
+
+-topic, sono 
+\begin_inset Formula $K$
+\end_inset
+
+ distribuzioni multinomiali di dimensione 
+\begin_inset Formula $V$
+\end_inset
+
+ e 
+\begin_inset Formula $M$
+\end_inset
+
+ misture su 
+\begin_inset Formula $K$
+\end_inset
+
+ topic nascosti.
+ Questo da 
+\begin_inset Formula $KV+KM$
+\end_inset
+
+ parametri e quindi una crescita lineare in 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ La crescita lineare del numero dei parametri, suggerisce che il modello
+ è incline all'overfitting (
+\series bold
+riferimento appendice
+\series default
+) anche quando vengono usate tecniche di smoothing dei parametri.
+\end_layout
+
+\begin_layout Standard
+LDA supera entrambi questi problemi trattando i pesi della mixture di topic
+ come variabili aleatorie nascoste con 
+\begin_inset Formula $k$
+\end_inset
+
+-parametri piuttosto che utilizzare un insieme di parametri molto grandi
+ strettamente legato al training set.
+ 
+\end_layout
+
+\begin_layout Subsection
+Interpretazione geometrica 
+\end_layout
+
+\begin_layout Standard
+Per illustrare meglio le differenze tra LDA e gli altri modelli, è possibile
+ considerare la geometria dello spazio latente, è evidenziare come un documento
+ è rappresentato nello spazio in modo differente a seconda del modello.
+\end_layout
+
+\begin_layout Standard
+Ciascuno dei quattro modelli descritti in precedenza, opera
+\series bold
+ 
+\series default
+in uno spazio di distribuzioni sulle parole.
+ Ciascuna di queste distribuzioni può essere vista come un punto nel 
+\begin_inset Formula $(v-1)$
+\end_inset
+
+- simplesso, chiamato simplesso delle parole.
+ 
+\end_layout
+
+\begin_layout Standard
+L'unigram model individua un singolo punto nel simplesso delle parole e
+ assume che tutte le parole nel corpus siano generate dalla corrispondente
+ distribuzione.
+ I modelli a variabili latenti considerano 
+\begin_inset Formula $k$
+\end_inset
+
+ punti nel simplesso delle parole e formano un sotto-simplesso, chiamato
+ simplesso dei topic.
+ È importante notare che ciascun punto nel simplesso dei topic è anche un
+ punto appartenente al simplesso delle parole.
+ 
+\end_layout
+
+\begin_layout Standard
+Differenti modelli utilizzano il simplesso dei topic in modo diverso per
+ generare documenti:
+\end_layout
+
+\begin_layout Itemize
+il modello mixture of unigram assume che per ciascun documento viene scelto,
+ in modo casuale, uno dei 
+\begin_inset Formula $k$
+\end_inset
+
+ punti del simplesso delle parole.
+ Tutte le parole del documento sono generate dalla distribuzione corrispondente
+ al punto scelto
+\end_layout
+
+\begin_layout Itemize
+il modello pLSI assume che ciascuna parola di un documento del training
+ set deriva da un topic scelto in modo casuale.
+ I topic sono a loro volta generati da una distribuzione sui topic specifica
+ per quel documento.
+ Quindi l'insieme dei documenti del training set definiscono una distribuzione
+ empirica sul simplesso dei topic
+\end_layout
+
+\begin_layout Itemize
+LDA assume che ciascuna parola, sia dei documenti noti sia di quelli non
+ ancora osservati, è generata da un topic scelto in modo casuale, che è
+ a sua volta generato da una distribuzione con un parametro casuale.
+ Questo paramentro è preso come campione una sola volta per documento da
+ una distribuzione sul simplesso dei topic.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+insirire fig 4 pag 1002
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Inferenza e stima dei parametri
+\end_layout
+
+\begin_layout Subsection
+Inferenza
+\end_layout
+
+\begin_layout Standard
+Per poter applicare LDA, è necessario calcolare, dato un documento, la distribuz
+ione a posteriori delle variabili nascoste:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(\theta,\mathbf{z\,|\, w},\alpha,\beta)=\frac{p(\theta,\mathbf{z,w}\,|\,\alpha,\beta)}{p(\mathbf{w\,|\,\alpha,\beta})}
+\end{equation}
+
+\end_inset
+
+Tuttavia tale distribuzione è computazionalmente intrattabile.Quindi, per
+ normalizzare la distribuzione, marginalizziamo sulle variabili nascoste
+ e riscriviamo 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+l'equazione
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:pippo"
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ in termini di parametri del modello:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+p(\mathbf{w}\,|\,\alpha,\beta)=\frac{\Gamma(\sum_{i}\alpha_{i})}{\prod_{i}\Gamma(\alpha_{i})}\int\left(\prod_{i=1}^{k}\theta_{i}^{\alpha_{i}-1}\right)\left(\prod_{n=1}^{N}\sum_{i=1}^{k}\prod_{j=1}^{V}(\theta_{i}\beta_{ij})^{w_{n}^{j}}\right)\, d\theta\label{eq:ciccia}
+\end{equation}
+
+\end_inset
+
+una funzione intrattabile a causa dell'accoppiamento tra 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\theta$
+\end_inset
+
+ e 
+\begin_inset Formula $\mathbf{\beta}$
+\end_inset
+
+ nella sommatoria su topic nascosti.
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+Anche se la distribuzione a posteriori è intrattabile per una esatta inferenza,
+ è possibile applicare un algoritmo di approssimazione.
+\end_layout
+
+\begin_layout Subsection
+Variational inference
+\end_layout
+
+\begin_layout Standard
+L'idea alla base dell'inferenza variazionale convexity-based, è quella di
+ utilizzare la disuguaglianza di Jensen per ottenere un lower bound adattabile
+ alla verosimiglianza.
+ Si considera una famiglia di lower bound indicizzati da una insieme di
+\shape italic
+ parametri variazionali
+\shape default
+, scelti da una procedura di ottimizzazione che tenta di trovare il lower
+ bound più stretto possibile.
+ 
+\end_layout
+
+\begin_layout Standard
+Il modo più semplice di ottenere una famiglia di lower bound trattabili,
+ è quello di apportare delle modifiche al (
+\series bold
+figura 5 left pag 1003
+\series default
+) al modello grafico mostrato in figura.
+ L'accoppiamento tra 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\theta$
+\end_inset
+
+ e 
+\begin_inset Formula $\mathbf{\beta}$
+\end_inset
+
+ deriva dagli archi tra 
+\begin_inset Formula $\theta$
+\end_inset
+
+, 
+\family default
+\series bold
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ e
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+.
+ Cancellando questi archi e il nodo 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+, e dotando il modello grafico semplificato di parametri variazionali liberi,
+ si ottiene una famiglia di distribuzioni sulle variabili nascoste.
+ Questa famiglia è caratterizzata dalla seguente distribuzione variazionale:
+\begin_inset Formula 
+\begin{equation}
+q(\theta,\mathbf{z}\,|\,\gamma,\phi)=q(\theta\,|\,\gamma)\prod_{n=1}^{N}q(z_{n}\,|\,\phi_{n})\label{eq:minnie}
+\end{equation}
+
+\end_inset
+
+dove il parametro di Dirichlet 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ e i parametri multinomiali 
+\begin_inset Formula $(\phi_{1},...,\phi_{n})$
+\end_inset
+
+ sono parametri variazionali liberi.
+ 
+\end_layout
+
+\begin_layout Standard
+Il passo successivo è quello di impostare un problema di ottimizzazione
+ che determini i valori dei parametri 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ e 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ Come descritto (
+\series bold
+fare riferimento appendice
+\series default
+) trovare
+\series bold
+ 
+\series default
+un lower bound alla verosimiglianza il più stretto possibile si traduce
+ direttamente nel seguente problema di ottimizzazione:
+\begin_inset Formula 
+\begin{equation}
+(\gamma^{*},\phi^{*})=arg\, min_{(\gamma,\phi)}D(q(\theta,\mathbf{z}\,|\,\gamma,\phi)\,\Vert\, p(\theta,\mathbf{z}\,|\,\mathbf{w},\alpha,\beta))\label{eq:fede}
+\end{equation}
+
+\end_inset
+
+Quindi i valori ottimizzati dei parametri variazionali sono trovati minimizzando
+ la divergenza di Kullback-Leiber (KL-divergence) tra la distribuzione variazion
+ale e 
+\begin_inset Formula $p(\theta,\mathbf{z}\,|\,\mathbf{w},\alpha,\beta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Questa minimizzazione può essere raggiunta attraverso un metodo iterativo
+ fixed-point.
+ In particolare (
+\series bold
+fare riferimento appendice
+\series default
+ 
+\series bold
+A3 articolo blei
+\series default
+) calcolando la derivata della divergenza di Kullback-Leiber ed uguagliandola
+ a zero si ottieniamo la seguiente coppia di equazioni aggiornate:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\phi_{ni}\propto\beta_{iw_{n}}exp\{E_{q}[log(\theta_{i})\,|\,\gamma]\}\label{eq:pluto}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\gamma_{i}=\alpha_{i}+\sum_{n=1}^{N}\phi_{ni}\label{eq:paperino}
+\end{equation}
+
+\end_inset
+
+Come mostrato in (
+\series bold
+riferimento appendice A1 articolo Blei
+\series default
+), possiamo calcolare 
+\begin_inset Formula $E_{q}[log(\theta_{i})\,|\,\gamma]$
+\end_inset
+
+ come
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+E_{q}[log(\theta_{i})\,|\,\gamma]=\Psi(\gamma_{i})-\Psi(\Sigma_{j=1}^{k}\gamma_{i})
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ è la derivata prima della funzione 
+\begin_inset Formula $log\Gamma$
+\end_inset
+
+ che è calcolabile attraverso l'approssimazione di Taylor.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Stima dei parametri
+\end_layout
+
+\begin_layout Standard
+Per stimare i parametri del modello, è possibile utilizzare un metodo empirico
+ bayesiano.
+ In particolare, dato un corpus di documenti 
+\begin_inset Formula $D=\{\mathbf{w}_{1,}\mathbf{w}_{2},...,\mathbf{w}_{M}\}$
+\end_inset
+
+, vogliamo trovare i paramentri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta$
+\end_inset
+
+ che massimizzano la verosimliglianza dei dati:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+l(\alpha,\mathbf{\beta})=\sum_{d=1}^{M}log\, p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})
+\end{equation}
+
+\end_inset
+
+
+\series default
+Pur essendo la quantità 
+\begin_inset Formula $p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})$
+\end_inset
+
+ computazionalmente intrattabile, la variational inference ci fornisce un
+ lower bound della verosimiglianza trattabile, che può essere massimizzato
+ rispetto ad 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ È quindi possibile trovare 
+\series bold
+approximate empirical Bayes estimates 
+\series default
+per LDA 
+\series bold
+via an alternating variational EM (???) procedure 
+\series default
+che massimizza un lower bound rispetto ai parametri variazionali 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ e 
+\begin_inset Formula $\phi$
+\end_inset
+
+, e in seguito, per fissati valori di questi parametri, massimizza il lower
+ bound rispetto ai parametri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta$
+\end_inset
+
+ del modello.
+ 
+\end_layout
+
+\begin_layout Standard
+La derivazione dell'algoritmo EM, da luogo al seguente algoritmo iterativo:
+\end_layout
+
+\begin_layout Enumerate
+(
+\shape italic
+E-step
+\shape default
+) Per ciascun documento, trova i valori ottimizzati dei parametri variazionali
+ 
+\begin_inset Formula $\{\gamma_{d}^{*},\phi_{d}^{*}:\, d\in D\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+(
+\shape italic
+M-step
+\shape default
+) Massimizza il risultante lower bound derispetto ai parametri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta$
+\end_inset
+
+ del modello.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Campionamento di Gibbs 
+\end_layout
+
+\begin_layout Standard
+Il campionamento di Gibbs è una tecnica che permette di approssimare il
+ valore di un integrale ed è applicabile nel caso in cui lo spazio 
+\begin_inset Formula $Z$
+\end_inset
+
+ abbia almeno due dimensioni (ciascun punto 
+\begin_inset Formula $z=<z_{1},\,...,\, z_{k}>$
+\end_inset
+
+, con 
+\begin_inset Formula $z_{k}>1$
+\end_inset
+
+).
+ L'idea di base è quella di fare una scelta separata per ciascuna della
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ dimensioni e che ciascuna scelta dipende dalle altre 
+\begin_inset Formula $k-1$
+\end_inset
+
+ dimensioni.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+caption{Campionamento di Gibbs}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	$z^{(0)}:=
+\backslash
+,<z_{1}^{(0)},
+\backslash
+,...,
+\backslash
+, z_{k}^{(0)}>$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+For{$t=1$ 
+\backslash
+KwTo $T$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+For{$i=1$ 
+\backslash
+KwTo $k$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			$z_{i}^{(t+1)}
+\backslash
+sim P(Z_{i}
+\backslash
+,|
+\backslash
+, z_{1}^{(t+1)},
+\backslash
+,...,
+\backslash
+, z_{i-1}^{(t+1)},
+\backslash
+,...,
+\backslash
+, z_{i+1}^{(t)},
+\backslash
+,...,
+\backslash
+, z_{k}^{(t)})$
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Smoothing
+\end_layout
+
+\begin_layout Standard
+La grande dimensione del vocabolario, caratteristica di molti corpora di
+ documenti, causa problemi di sparsità: è probabile che un nuovo documento
+ contenga parole che non compaiono in nessun documento del training set.
+ Le stime di massima verosimiglianza dei paramentri multinomiali assegnano
+ probabilità 0 a queste parole, e quindi probabilità 0 al nuovo documento.
+ L'approccio standard per risolvere questo problema consiste nel 
+\begin_inset Quotes eld
+\end_inset
+
+regolare
+\begin_inset Quotes erd
+\end_inset
+
+ i parametri multinomiali assegnando probabilità positive a tutti gli elementi
+ del vocabolario anche se non compaiono nei documenti del training set.
+ 
+\end_layout
+
+\begin_layout Standard
+Impostando LDA, otteniamo il modello grafico esteso mostrato in figura (
+\series bold
+fig 7 pag 1006
+\series default
+).
+ Il paramentro del modello
+\begin_inset Formula $\beta$
+\end_inset
+
+ verrà trattato come una matrice casuale 
+\begin_inset Formula $k\times V$
+\end_inset
+
+ (una riga per ciascun componente della mistura), assumendo che ciascuna
+ riga sia generata indipendentemente a partire da una distribuzione di Dirichlet
+ sostituibile
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Una distribuzione di Dirichlet scambiabile è una distribuzione di Dirichlet
+ con un singolo parametro scalare 
+\begin_inset Formula $\eta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ In seguito viene estesa la procedura di inferenza per poter trattare 
+\begin_inset Formula $\beta_{i}$
+\end_inset
+
+ come variabili casuali che vengono dotate di una distribuzione a posteriori,
+ condizionata ai dati.
+ 
+\end_layout
+
+\begin_layout Standard
+Consideriamo ora un approccio variazionale all'inferenza bayesiana che assegna
+ una distribuzione separabile alle variabili casuali 
+\begin_inset Formula $\beta$
+\end_inset
+
+, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ e 
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+q(\beta_{1:k},\mathbf{z}_{1:M},\theta_{1:M}\,|\,\lambda,\phi,\gamma)=\prod_{i=1}^{k}Dir(\beta_{1}\,|\,\lambda_{i})\prod_{d=1}^{M}q_{d}(\theta_{d},\mathbf{z}_{d}\,|\,\phi_{d},\gamma_{d})
+\end{equation}
+
+\end_inset
+
+dove 
+\begin_inset Formula $q_{d}(\theta,\mathbf{z}\,|\,\phi,\gamma)$
+\end_inset
+
+ è la distribuzione variazionale definita per LDA nell'equazione 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:minnie"
+
+\end_inset
+
+ (
+\series bold
+manca fine paragrafo
+\series default
+)
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Esempi
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{appendices}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Overfitting
+\end_layout
+
+\begin_layout Standard
+Con il termine 
+\shape italic
+overfitting
+\shape default
+ (sovradattamento) si inica la tendenza di un modello statistico ad adattarsi
+ ai dati osservati (il campione) usando un numero eccessivo di parametri.
+ 
+\end_layout
+
+\begin_layout Standard
+Il concetto di overfitting è molto importante nell'
+\shape italic
+apprendimento automatico
+\shape default
+ e nel 
+\shape italic
+data mining
+\shape default
+.
+ Di solito un algoritmo di apprendimento viene allenato usando un certo
+ insieme di esempi (il
+\shape italic
+ training set
+\shape default
+), ad esempio situazioni tipo di cui è già noto il risultato che interessa
+ prevedere (output).
+ Si assume che l'algoritmo di apprendimento (il 
+\shape italic
+learner
+\shape default
+) raggiungerà uno stato in cui sarà in grado di predire gli output per tutti
+ gli altri esempi che ancora non ha visionato, cioè si assume che il modello
+ di apprendimento sarà in grado di generalizzare.
+ Tuttavia, soprattutto nei casi in cui l'apprendimento è stato effettuato
+ troppo a lungo o dove c'era uno scarso numero di esempi di allenamento,
+ il modello potrebbe adattarsi a caratteristiche che sono specifiche solo
+ del training set, ma che non hanno riscontro nel resto dei casi; perciò,
+ in presenza di overfitting, le prestazioni (cioè la capacità di adattarsi/preve
+dere) sui dati di allenamento aumenteranno, mentre le prestazioni sui dati
+ non visionati saranno peggiori.
+ Sia nella statistica che nel machine learning, per evitare l'overfitting,
+ è necessario attuare particolari tecniche, come la cross-validation e l'arresto
+ anticipato, che indichino quando un ulteriore allenamento non porterebbe
+ ad una migliore generalizzazione.
+ 
+\end_layout
+
+\begin_layout Section
+Variational Inference 
+\end_layout
+
+\begin_layout Standard
+In questa sezione ricaveremo l'algoritmo di inferenza variazionale descritto
+ in sezione (
+\series bold
+fare riferimento sezione
+\series default
+).
+ Per far ciò utilizzeremo la seguente distribuzione variazionale
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+q(\theta,\mathbf{z\,|}\,\gamma,\phi)=q(\theta\,|\,\gamma)\prod_{n=1}^{N}q(z_{n}\,|\,\phi_{n})
+\]
+
+\end_inset
+
+dove i parametri variazionali
+\begin_inset Formula $\gamma$
+\end_inset
+
+ e
+\begin_inset Formula $\phi$
+\end_inset
+
+ sono impostati mediante la procedura di ottimizzazione descritta di seguito.
+\end_layout
+
+\begin_layout Standard
+Iniziamo limitando la log verosimiglianza di un documento utilizzando la
+ disuguaglianza di Jensen.
+ Omettendo i parametri 
+\begin_inset Formula $\phi$
+\end_inset
+
+ e
+\begin_inset Formula $\gamma$
+\end_inset
+
+ per semplicità otteniamo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+logp(\mathbf{w}\,|\,\alpha,\beta) & = & log\int\sum_{z}p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta=\\
+ &  & log\int\sum_{z}\frac{p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)q(\theta,\mathbf{z})}{q(\theta,\mathbf{z})}d\theta\geq\\
+ &  & \int\sum_{z}q(\theta,\mathbf{z})p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta-\int\sum_{z}q(\theta,\mathbf{z})log\sum_{z}q(\theta,\mathbf{z})d\theta=\\
+ &  & E_{q}log[p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)]-E_{q}[logq(\theta,\mathbf{z})]\\
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quindi la disuguaglianza di Jensen fornisce un lower bound per la log verosimigl
+ianza per una arbitraria distribuzione 
+\begin_inset Formula $q(\theta,\mathbf{z\,|}\,\gamma,\phi)$
+\end_inset
+
+.
+ È facile verificare che la differenza tra la parte sinistra e la parte
+ destra dell'equazione rappresentano la 
+\begin_inset Formula $KL$
+\end_inset
+
+-divergence tra la variational posterior probability e la true posterior
+ probability.le
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{appendices}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "biblio"
+options "alpha"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
