@@ -2293,6 +2293,16 @@ LDA supera entrambi questi problemi trattando i pesi della mixture di topic
 
 -parametri piuttosto che utilizzare un insieme di parametri molto grandi
  strettamente legato al training set.
+ Inoltre , i 
+\begin_inset Formula $K+KV$
+\end_inset
+
+ parametri nel modello LDA a 
+\begin_inset Formula $K$
+\end_inset
+
+-topic non crescono linearmente alla grandezza deii documenti del training
+ set.
  
 \end_layout
 
@@ -2313,10 +2323,14 @@ Ciascuno dei quattro modelli descritti in precedenza, opera
 \series default
 in uno spazio di distribuzioni sulle parole.
  Ciascuna di queste distribuzioni può essere vista come un punto nel 
-\begin_inset Formula $(v-1)$
+\begin_inset Formula $(V-1)$
 \end_inset
 
-- simplesso, chiamato simplesso delle parole.
+- simplesso, chiamato 
+\shape italic
+simplesso delle parole
+\shape default
+.
  
 \end_layout
 
@@ -2325,14 +2339,18 @@ L'unigram model individua un singolo punto nel simplesso delle parole e
  assume che tutte le parole nel corpus siano generate dalla corrispondente
  distribuzione.
  I modelli a variabili latenti considerano 
-\begin_inset Formula $k$
+\begin_inset Formula $K$
 \end_inset
 
  punti nel simplesso delle parole e formano un sotto-simplesso, chiamato
  simplesso dei topic.
  È importante notare che ciascun punto nel simplesso dei topic è anche un
  punto appartenente al simplesso delle parole.
- 
+ (
+\series bold
+inserire figura
+\series default
+)
 \end_layout
 
 \begin_layout Standard
@@ -2341,29 +2359,45 @@ Differenti modelli utilizzano il simplesso dei topic in modo diverso per
 \end_layout
 
 \begin_layout Itemize
-il modello mixture of unigram assume che per ciascun documento viene scelto,
- in modo casuale, uno dei 
-\begin_inset Formula $k$
+il modello
+\shape italic
+ mixture of unigram
+\shape default
+ assume che per ciascun documento viene scelto, in modo casuale, uno dei
+ 
+\begin_inset Formula $K$
 \end_inset
 
  punti del simplesso delle parole.
  Tutte le parole del documento sono generate dalla distribuzione corrispondente
- al punto scelto
+ al punto scelto.
 \end_layout
 
 \begin_layout Itemize
-il modello pLSI assume che ciascuna parola di un documento del training
- set deriva da un topic scelto in modo casuale.
+il modello 
+\shape italic
+pLSI
+\shape default
+ assume che ciascuna parola di un documento del 
+\shape italic
+training set
+\shape default
+ deriva da un topic scelto in modo casuale.
  I topic sono a loro volta generati da una distribuzione sui topic specifica
  per quel documento.
- Quindi l'insieme dei documenti del training set definiscono una distribuzione
- empirica sul simplesso dei topic
+ Esiste una istribuzione di questo tipo per ciascun documento; l'insieme
+ dei documenti del training set definiscono una distribuzione empirica sul
+ simplesso dei topic.
 \end_layout
 
 \begin_layout Itemize
-LDA assume che ciascuna parola, sia dei documenti noti sia di quelli non
- ancora osservati, è generata da un topic scelto in modo casuale, che è
- a sua volta generato da una distribuzione con un parametro casuale.
+
+\shape italic
+LDA
+\shape default
+ assume che ciascuna parola, sia dei documenti noti sia di quelli non ancora
+ osservati, è generata da un topic scelto in modo casuale, che è a sua volta
+ generato da una distribuzione con un parametro casuale.
  Questo paramentro è preso come campione una sola volta per documento da
  una distribuzione sul simplesso dei topic.
 \end_layout
@@ -2371,7 +2405,6 @@ LDA assume che ciascuna parola, sia dei documenti noti sia di quelli non
 \begin_layout Standard
 
 \series bold
-insirire fig 4 pag 1002
 \begin_inset Newpage pagebreak
 \end_inset
 
@@ -2383,25 +2416,34 @@ Inferenza e stima dei parametri
 \end_layout
 
 \begin_layout Subsection
-Inferenza
+Inferenza a posteriori
 \end_layout
 
 \begin_layout Standard
-Per poter applicare LDA, è necessario calcolare, dato un documento, la distribuz
-ione a posteriori delle variabili nascoste:
+Supponiamo che le distribuzioni sui topic 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+ e i paramentri di Dirichlet 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ siano fissati.
+ La distribuzione a posteriori delle variabili nasciste specifiche per un
+ documento, dato il documento è:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-p(\theta,\mathbf{z\,|\, w},\alpha,\beta)=\frac{p(\theta,\mathbf{z,w}\,|\,\alpha,\beta)}{p(\mathbf{w\,|\,\alpha,\beta})}
+p(\theta,\mathbf{z\,|\, w},\alpha,\beta_{1:K})=\frac{p(\theta,\mathbf{z,w}\,|\,\alpha,\beta_{1:K})}{p(\mathbf{w\,|\,\alpha},\beta_{1:K})}
 \end{equation}
 
 \end_inset
 
-Tuttavia tale distribuzione è computazionalmente intrattabile.Quindi, per
- normalizzare la distribuzione, marginalizziamo sulle variabili nascoste
- e riscriviamo 
+Tuttavia tale distribuzione è computazionalmente intrattabile.
+ Quindi, per normalizzare la distribuzione, marginalizziamo sulle variabili
+ nascoste e riscriviamo 
 \family roman
 \series medium
 \shape up
@@ -2433,16 +2475,12 @@ reference "eq:pippo"
 \noun default
 \color inherit
  in termini di parametri del modello:
-\begin_inset Newline newline
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-p(\mathbf{w}\,|\,\alpha,\beta)=\frac{\Gamma(\sum_{i}\alpha_{i})}{\prod_{i}\Gamma(\alpha_{i})}\int\left(\prod_{i=1}^{k}\theta_{i}^{\alpha_{i}-1}\right)\left(\prod_{n=1}^{N}\sum_{i=1}^{k}\prod_{j=1}^{V}(\theta_{i}\beta_{ij})^{w_{n}^{j}}\right)\, d\theta\label{eq:ciccia}
+p(\mathbf{w}\,|\,\alpha,\beta_{1:K})=\frac{\Gamma(\sum_{i}\alpha_{i})}{\prod_{i}\Gamma(\alpha_{i})}\int\left(\prod_{i=1}^{k}\theta_{i}^{\alpha_{i}-1}\right)\left(\prod_{n=1}^{N}\sum_{i=1}^{k}\prod_{j=1}^{V}(\theta_{i}\beta_{ij})^{w_{n}^{j}}\right)\, d\theta\label{eq:ciccia}
 \end{equation}
 
 \end_inset
@@ -2464,10 +2502,17 @@ una funzione intrattabile a causa dell'accoppiamento tra
 \end_inset
 
  e 
-\begin_inset Formula $\mathbf{\beta}$
+\begin_inset Formula $\beta_{1:K}$
 \end_inset
 
- nella sommatoria su topic nascosti.
+ nella sommatoria su topic nascosti 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dickey1983multiple"
+
+\end_inset
+
+.
  
 \family default
 \series default
@@ -2480,8 +2525,9 @@ una funzione intrattabile a causa dell'accoppiamento tra
 \uwave default
 \noun default
 \color inherit
-Anche se la distribuzione a posteriori è intrattabile per una esatta inferenza,
- è possibile applicare un algoritmo di approssimazione.
+Dickey ha msotrato che questa funzione è un funzione attesa sotto una particolar
+e estensione della distribuzione di Dirichlet che può essere rappresentata
+ mediante funzioni ipergeometriche (infatti) 
 \end_layout
 
 \begin_layout Subsection
