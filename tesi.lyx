@@ -101,10 +101,6 @@ I introduzione al problema e fondamenti teorici
 Introduzione
 \end_layout
 
-\begin_layout Standard
-La mia tesi è bella 
-\end_layout
-
 \begin_layout Subsection
 Struttura della tesi
 \end_layout
@@ -898,9 +894,6 @@ Le derivate di
 \lang italian
 .
  In particolare le prime due derivate sono:
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 a'(\eta)=E_{\eta}[t(X)]
@@ -909,6 +902,9 @@ a'(\eta)=E_{\eta}[t(X)]
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 a''(\eta)=Var_{\eta}[t(X)]
@@ -1502,7 +1498,7 @@ p(\theta\,|\,\alpha)=\frac{{\displaystyle \Gamma({\displaystyle {\scriptstyle \s
 
 \end_inset
 
-dove il parametro
+dove il parametro 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -1569,7 +1565,7 @@ Se
 \noun off
 \color none
 \lang english
-
+ 
 \begin_inset Formula $\theta\,|\,\alpha\sim Dir(\alpha)$
 \end_inset
 
@@ -1627,7 +1623,7 @@ Da cui segue che
 
 \end_inset
 
-dove
+dove 
 \begin_inset Formula $n_{i}(z_{1:N})$
 \end_inset
 
@@ -1821,7 +1817,7 @@ LDA e sostituibilità
 \end_layout
 
 \begin_layout Standard
-Un insieme finito di variabili aleatorie
+Un insieme finito di variabili aleatorie 
 \begin_inset Formula $\{z_{1,}z_{2},\,...\,,z_{n}\}$
 \end_inset
 
@@ -1947,7 +1943,7 @@ scegli
 \end_layout
 
 \begin_layout Enumerate
-pwer 
+per 
 \begin_inset Formula $n\in\{1,...N\}$
 \end_inset
 
@@ -2158,7 +2154,7 @@ associati a
 \end_layout
 
 \begin_layout Subsubsection
-Probabilistic latent semantic indexing (pLSI)
+Probabilistic latent semantic indexing 
 \end_layout
 
 \begin_layout Standard
@@ -2348,7 +2344,7 @@ L'unigram model individua un singolo punto nel simplesso delle parole e
  punto appartenente al simplesso delle parole.
  (
 \series bold
-inserire figura
+inserire figura 3.2 tesi Blei
 \series default
 )
 \end_layout
@@ -2415,6 +2411,19 @@ LDA
 Inferenza e stima dei parametri
 \end_layout
 
+\begin_layout Standard
+L'obiettivo principale nell'utilizzo di modelli a varibili latenti, è quello
+ di calcolare la distribuzione a posteriori di queste variabili condizionate
+ a variabili note.
+ Eccetto per alcuni modelli rudimentali, una esatta inferenza a posteriori
+ è computazionalmente intrattabile.
+ Tuttavia esistono numerosi algoritmi di approssimazione che possono essere
+ considerati per poter applicare LDA che soddisfano le restrizioni della
+ famiglia esponenziale condizionata descritta in precedenza.
+ Nell'ambito di questa tesi verrano considerate due tecniche di approssimazione:
+ variational inference e il campionamento di Gibbs.
+\end_layout
+
 \begin_layout Subsection
 Inferenza a posteriori
 \end_layout
@@ -2457,7 +2466,7 @@ Tuttavia tale distribuzione è computazionalmente intrattabile.
 \color none
 l'equazione
 \begin_inset CommandInset ref
-LatexCommand vref
+LatexCommand eqref
 reference "eq:pippo"
 
 \end_inset
@@ -2525,75 +2534,45 @@ key "dickey1983multiple"
 \uwave default
 \noun default
 \color inherit
-Dickey ha msotrato che questa funzione è un funzione attesa sotto una particolar
-e estensione della distribuzione di Dirichlet che può essere rappresentata
- mediante funzioni ipergeometriche (infatti) 
+Dickey ha msotrato che questa funzione è una funzione attesa sotto una particola
+re estensione della distribuzione di Dirichlet che può essere rappresentata
+ mediante funzioni ipergeometriche (infatti questa estensione è esattamente
+ la distribuzione delle parole rappresentata in figura 
+\series bold
+(3.2
+\series default
+).
+ Questa funzione è usata nel contesto bayesiano per dati discreti
+\series bold
+ 
+\series default
+censurati
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+la censura si verifica quando il valore di una misurazione o osservazione
+ è solo parzialmente nota
 \end_layout
 
-\begin_layout Subsection
+\end_inset
+
+, per rappresentare l'inferenza a posteriori su 
+\begin_inset Formula $\theta$
+\end_inset
+
+ che, con queste impostazioni, è un paramentro casuale.
+\end_layout
+
+\begin_layout Subsubsection
 Variational inference
 \end_layout
 
 \begin_layout Standard
-L'idea alla base dell'inferenza variazionale convexity-based, è quella di
- utilizzare la disuguaglianza di Jensen per ottenere un lower bound adattabile
- alla verosimiglianza.
- Si considera una famiglia di lower bound indicizzati da una insieme di
-\shape italic
- parametri variazionali
-\shape default
-, scelti da una procedura di ottimizzazione che tenta di trovare il lower
- bound più stretto possibile.
- 
+La distribuzione fattorizzata completa delle variabili latenti è:
 \end_layout
 
 \begin_layout Standard
-Il modo più semplice di ottenere una famiglia di lower bound trattabili,
- è quello di apportare delle modifiche al (
-\series bold
-figura 5 left pag 1003
-\series default
-) al modello grafico mostrato in figura.
- L'accoppiamento tra 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $\theta$
-\end_inset
-
- e 
-\begin_inset Formula $\mathbf{\beta}$
-\end_inset
-
- deriva dagli archi tra 
-\begin_inset Formula $\theta$
-\end_inset
-
-, 
-\family default
-\series bold
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
-\begin_inset Formula $\mathbf{z}$
-\end_inset
-
 
 \family roman
 \series medium
@@ -2606,21 +2585,9 @@ figura 5 left pag 1003
 \uwave off
 \noun off
 \color none
- e
-\begin_inset Formula $\mathbf{w}$
-\end_inset
-
-.
- Cancellando questi archi e il nodo 
-\begin_inset Formula $\mathbf{w}$
-\end_inset
-
-, e dotando il modello grafico semplificato di parametri variazionali liberi,
- si ottiene una famiglia di distribuzioni sulle variabili nascoste.
- Questa famiglia è caratterizzata dalla seguente distribuzione variazionale:
 \begin_inset Formula 
 \begin{equation}
-q(\theta,\mathbf{z}\,|\,\gamma,\phi)=q(\theta\,|\,\gamma)\prod_{n=1}^{N}q(z_{n}\,|\,\phi_{n})\label{eq:minnie}
+q(\theta,\mathbf{z}\,|\,\gamma,\phi_{1:N})=q(\theta\,|\,\gamma)\prod_{n=1}^{N}q(z_{n}\,|\,\phi_{n})\label{eq:minnie}
 \end{equation}
 
 \end_inset
@@ -2630,7 +2597,7 @@ dove il parametro di Dirichlet
 \end_inset
 
  e i parametri multinomiali 
-\begin_inset Formula $(\phi_{1},...,\phi_{n})$
+\begin_inset Formula $(\phi_{1:N})$
 \end_inset
 
  sono parametri variazionali liberi.
@@ -2638,29 +2605,11 @@ dove il parametro di Dirichlet
 \end_layout
 
 \begin_layout Standard
-Il passo successivo è quello di impostare un problema di ottimizzazione
- che determini i valori dei parametri 
-\begin_inset Formula $\gamma$
-\end_inset
-
- e 
-\begin_inset Formula $\phi$
-\end_inset
-
-.
- Come descritto (
-\series bold
-fare riferimento appendice
-\series default
-) trovare
-\series bold
- 
-\series default
-un lower bound alla verosimiglianza il più stretto possibile si traduce
- direttamente nel seguente problema di ottimizzazione:
+È possibile trovare le impostazioni di questi paramentri minimizzano la
+ KL-divergence 
 \begin_inset Formula 
 \begin{equation}
-(\gamma^{*},\phi^{*})=arg\, min_{(\gamma,\phi)}D(q(\theta,\mathbf{z}\,|\,\gamma,\phi)\,\Vert\, p(\theta,\mathbf{z}\,|\,\mathbf{w},\alpha,\beta))\label{eq:fede}
+(\gamma^{*},\phi_{1:N}^{*})=arg\, min_{(\gamma,\phi)}D(q(\theta,\mathbf{z}\,|\,\gamma,\phi_{1:N})\,\Vert\, p(\theta,\mathbf{z}\,|\,\mathbf{w},\alpha,\beta_{1:K}))\label{eq:fede}
 \end{equation}
 
 \end_inset
@@ -2686,7 +2635,7 @@ fare riferimento appendice
 A3 articolo blei
 \series default
 ) calcolando la derivata della divergenza di Kullback-Leiber ed uguagliandola
- a zero si ottieniamo la seguiente coppia di equazioni aggiornate:
+ a zero si ottine la seguente coppia di equazioni aggiornate:
 \end_layout
 
 \begin_layout Standard
@@ -2708,19 +2657,11 @@ A3 articolo blei
 
 \end_inset
 
-Come mostrato in (
-\series bold
-riferimento appendice A1 articolo Blei
-\series default
-), possiamo calcolare 
+Il valore atteso della multinomiale aggiornata 
 \begin_inset Formula $E_{q}[log(\theta_{i})\,|\,\gamma]$
 \end_inset
 
- come
-\begin_inset Newline newline
-\end_inset
-
-
+ può essere calcolato come segue: 
 \begin_inset Formula 
 \begin{equation}
 E_{q}[log(\theta_{i})\,|\,\gamma]=\Psi(\gamma_{i})-\Psi(\Sigma_{j=1}^{k}\gamma_{i})
@@ -2732,12 +2673,477 @@ dove
 \begin_inset Formula $\Psi$
 \end_inset
 
- è la derivata prima della funzione 
-\begin_inset Formula $log\Gamma$
+ è la funzione digamma
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Funzione digamma: 
+\begin_inset Formula $\psi(x)=\frac{d}{dx}\ln{\Gamma(x)}=\frac{\Gamma'(x)}{\Gamma(x)}$
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
  che è calcolabile attraverso l'approssimazione di Taylor.
-\begin_inset Newline newline
+\end_layout
+
+\begin_layout Standard
+Questo implica la naturale parametrizzazione della distribuzione di Dirichlet
+ dell'equazione 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:federica"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\theta\,|\,\alpha)=exp\left\{ \left(\sum_{i=1}^{K}(\alpha_{i}-1)log\theta_{i}\right)+log\Gamma\left(\sum_{i=1}^{K}\alpha_{i}\right)-\sum_{i=1}^{K}log\Gamma(\alpha_{i})\right\} 
+\]
+
+\end_inset
+
+Da questa forma si può notare che il parametro naturale per la distribuzione
+ di Dirichlet è 
+\begin_inset Formula $\eta_{i}=\alpha_{i}-1$
+\end_inset
+
+ e la statistica sufficiente è 
+\begin_inset Formula $t(\theta_{i})=log\theta_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+La distribuzione di Dirichlet aggioranta è una distribuzione di Dirichlet
+ a posteriori, condizionata a osservazioni attese 
+\series bold
+taken under 
+\series default
+la distribuzione variazionale, 
+\begin_inset Formula $E[z_{n}\,|\,\phi_{n}]$
+\end_inset
+
+.
+ La multinomiale aggiornata dell'equazione è simile 
+\series bold
+to using 
+\series default
+il Teorema di Bayes, 
+\begin_inset Formula $p(z_{n}\,|\, w_{n})\propto p(z_{n}\,|\, w_{n})p(z_{n})$
+\end_inset
+
+, dove 
+\begin_inset Formula $p(z{}_{n})$
+\end_inset
+
+ è approssimata dall'esponenziale del valore atteso del suo logaritmo sotto
+ la distribuzione variazionale.
+\end_layout
+
+\begin_layout Standard
+È importante notare che la distribuzione variazionale è attualmente una
+ distribuzione condizionata che varia come una funzione del documento 
+\series bold
+
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+.
+ 
+\series default
+Questo si verifica perché il problema di ottimizzazione espresso dall'equazione
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:fede"
+
+\end_inset
+
+ è definito per 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ fissato.
+ Di conseguenza i parametri di ottimizzazione 
+\begin_inset Formula $(\gamma^{*},\phi_{1:N}^{*})$
+\end_inset
+
+ sono una funzione di 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+.
+ È possibile scrivere la distribuzione variazionale risultante come 
+\begin_inset Formula $q(\theta,\mathbf{z}\,|\,\mathbf{\gamma^{*}}(\mathbf{w}),\phi_{1:N}^{*}(\mathbf{w}))$
+\end_inset
+
+, dove la dipendenza da 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+ è resa esplicita.
+ Quindi la distribuzione variazionale può essere considerata un'approssimazione
+ della distribuzione a posteriori 
+\begin_inset Formula $p(\theta,\mathbf{z}\,|\,\mathbf{w},\alpha,\beta_{1:K})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+Nell'ambito dell'analisi di documenti di testo, i paramentri di ottimizzazione
+ sono specifici per un singolo documento.
+ In particolare, i paramentri della distribuzione di Dirichlet possono essere
+ visti come una rappresentazione di un documento nel simplesso dei topic.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+La procedura di inferenza variazionale è indicata dal seguente pseudocodice:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}[H]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+caption{Inferenza variazionale per LDA}
+\end_layout
+
+\begin_layout Plain Layout
+
+	inizializza $
+\backslash
+phi^0_{ni}:=
+\backslash
+frac{1}{k} 
+\backslash
+ 
+\backslash
+forall i,n$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	inizializza $
+\backslash
+gamma_i:=
+\backslash
+alpha_i+
+\backslash
+frac{N}{k} 
+\backslash
+ 
+\backslash
+forall i$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+textbf{repeat}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+For{$n=1$ 
+\backslash
+KwTo $N$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\backslash
+For{$i=1$ 
+\backslash
+KwTo $k$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+				$
+\backslash
+phi_{ni}^{(t+1)}:=
+\backslash
+beta_{iw_n}exp(
+\backslash
+Psi(
+\backslash
+gamma_i^t))$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+				normalizza $
+\backslash
+phi_n^{t+1}$ to sum to 1
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+			$
+\backslash
+gamma^{t+1}:=
+\backslash
+alpha+
+\backslash
+sum_{n=1}^N
+\backslash
+phi_n^{t+1}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+textbf{until} convergence
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
+\end_inset
+
+Analizzando lo pseudocodice è chiaro come ciascuna iterazione della procedura
+ di inferenza variazionale per LDA richiede 
+\begin_inset Formula $O((N+1)K)$
+\end_inset
+
+ oeprazioni.
+ Empiricamente, il numero di iterazioni richieste per un singolo documento
+ è dell'ordine del numero di parole nel documento.
+ Questo implica un numero totale di operazioni dell'ordine di 
+\begin_inset Formula $N^{2}K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Campionamento di Gibbs
+\end_layout
+
+\begin_layout Standard
+Il campionamento di Gibbs è una tecnica che permette di approssimare il
+ valore di un integrale ed è applicabile nel caso in cui lo spazio 
+\begin_inset Formula $Z$
+\end_inset
+
+ abbia almeno due dimensioni (ciascun punto 
+\begin_inset Formula $z=<z_{1},\,...,\, z_{k}>$
+\end_inset
+
+, con 
+\begin_inset Formula $z_{k}>1$
+\end_inset
+
+).
+ L'idea di base è quella di fare una scelta separata per ciascuna della
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ dimensioni e che ciascuna scelta dipende dalle altre 
+\begin_inset Formula $k-1$
+\end_inset
+
+ dimensioni.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm}[H]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+caption{Campionamento di Gibbs}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	$z^{(0)}:=
+\backslash
+,<z_{1}^{(0)},
+\backslash
+,...,
+\backslash
+, z_{k}^{(0)}>$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+For{$t=1$ 
+\backslash
+KwTo $T$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+For{$i=1$ 
+\backslash
+KwTo $k$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			$z_{i}^{(t+1)}
+\backslash
+sim P(Z_{i}
+\backslash
+,|
+\backslash
+, z_{1}^{(t+1)},
+\backslash
+,...,
+\backslash
+, z_{i-1}^{(t+1)},
+\backslash
+,...,
+\backslash
+, z_{i+1}^{(t)},
+\backslash
+,...,
+\backslash
+, z_{k}^{(t)})$
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm}
+\end_layout
+
 \end_inset
 
 
@@ -2853,135 +3259,6 @@ M-step
 
  del modello.
  
-\end_layout
-
-\begin_layout Subsubsection
-Campionamento di Gibbs 
-\end_layout
-
-\begin_layout Standard
-Il campionamento di Gibbs è una tecnica che permette di approssimare il
- valore di un integrale ed è applicabile nel caso in cui lo spazio 
-\begin_inset Formula $Z$
-\end_inset
-
- abbia almeno due dimensioni (ciascun punto 
-\begin_inset Formula $z=<z_{1},\,...,\, z_{k}>$
-\end_inset
-
-, con 
-\begin_inset Formula $z_{k}>1$
-\end_inset
-
-).
- L'idea di base è quella di fare una scelta separata per ciascuna della
- 
-\begin_inset Formula $k$
-\end_inset
-
- dimensioni e che ciascuna scelta dipende dalle altre 
-\begin_inset Formula $k-1$
-\end_inset
-
- dimensioni.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{algorithm}
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-caption{Campionamento di Gibbs}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	$z^{(0)}:=
-\backslash
-,<z_{1}^{(0)},
-\backslash
-,...,
-\backslash
-, z_{k}^{(0)}>$
-\backslash
-;
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-For{$t=1$ 
-\backslash
-KwTo $T$}{
-\end_layout
-
-\begin_layout Plain Layout
-
-		
-\backslash
-For{$i=1$ 
-\backslash
-KwTo $k$}{
-\end_layout
-
-\begin_layout Plain Layout
-
-			$z_{i}^{(t+1)}
-\backslash
-sim P(Z_{i}
-\backslash
-,|
-\backslash
-, z_{1}^{(t+1)},
-\backslash
-,...,
-\backslash
-, z_{i-1}^{(t+1)},
-\backslash
-,...,
-\backslash
-, z_{i+1}^{(t)},
-\backslash
-,...,
-\backslash
-, z_{k}^{(t)})$
-\end_layout
-
-\begin_layout Plain Layout
-
-		}
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{algorithm}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
