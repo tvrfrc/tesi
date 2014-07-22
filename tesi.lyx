@@ -3176,55 +3176,39 @@ Per stimare i parametri del modello, è possibile utilizzare un metodo empirico
 \series bold
 \begin_inset Formula 
 \begin{equation}
-l(\alpha,\mathbf{\beta})=\sum_{d=1}^{M}log\, p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})
+l(\alpha,\mathbf{\beta_{1:K}})=\sum_{d=1}^{M}log\, p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\beta_{1:K})
 \end{equation}
 
 \end_inset
 
 
 \series default
-Pur essendo la quantità 
+Come descritto in precedenza, la quantità 
 \begin_inset Formula $p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})$
 \end_inset
 
- computazionalmente intrattabile, la variational inference ci fornisce un
- lower bound della verosimiglianza trattabile, che può essere massimizzato
- rispetto ad 
-\begin_inset Formula $\alpha$
-\end_inset
-
- e 
-\begin_inset Formula $\beta$
-\end_inset
-
-.
- È quindi possibile trovare 
+ è computazionalmente intrattabile.
+ Tuttavia è possibile utilizzare l'algoritmo EM-variazionele
 \series bold
-approximate empirical Bayes estimates 
-\series default
-per LDA 
-\series bold
-via an alternating variational EM (???) procedure 
-\series default
-che massimizza un lower bound rispetto ai parametri variazionali 
-\begin_inset Formula $\gamma$
-\end_inset
-
- e 
-\begin_inset Formula $\phi$
-\end_inset
-
-, e in seguito, per fissati valori di questi parametri, massimizza il lower
- bound rispetto ai parametri 
-\begin_inset Formula $\alpha$
-\end_inset
-
- e 
-\begin_inset Formula $\beta$
-\end_inset
-
- del modello.
  
+\series default
+per massimizzare il lower bound dato della log verosimiglianza:
+\begin_inset Formula 
+\[
+\mathcal{L}(\alpha,\beta)=\sum_{d=1}^{M}E_{qd}[logp(\theta_{d}\,|\,\alpha)]+E_{qd}[logp(\mathbf{z}_{d}\,|\,\theta_{d})]+E_{qd}[logp(\mathbf{w}_{d}\,|\,\mathbf{z}_{d},\beta)]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-E_{qd}[logq_{d}(\theta_{d})]-E_{qd}[logq_{d}(\mathbf{z}_{d})]
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3504,12 +3488,36 @@ Iniziamo limitando la log verosimiglianza di un documento utilizzando la
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{eqnarray*}
-logp(\mathbf{w}\,|\,\alpha,\beta) & = & log\int\sum_{z}p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta=\\
- &  & log\int\sum_{z}\frac{p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)q(\theta,\mathbf{z})}{q(\theta,\mathbf{z})}d\theta\geq\\
- &  & \int\sum_{z}q(\theta,\mathbf{z})p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta-\int\sum_{z}q(\theta,\mathbf{z})log\sum_{z}q(\theta,\mathbf{z})d\theta=\\
- &  & E_{q}log[p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)]-E_{q}[logq(\theta,\mathbf{z})]\\
-\end{eqnarray*}
+\[
+logp(\mathbf{w}\,|\,\alpha,\beta)=log\int\sum_{z}p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=log\int\sum_{z}\frac{p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)q(\theta,\mathbf{z})}{q(\theta,\mathbf{z})}d\theta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\geq\int\sum_{z}q(\theta,\mathbf{z})p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)d\theta-\int\sum_{z}q(\theta,\mathbf{z})log\sum_{z}q(\theta,\mathbf{z})d\theta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=E_{q}log[p(\theta,\mathbf{z},\mathbf{w}\,|\,\alpha,\beta)]-E_{q}[logq(\theta,\mathbf{z})]
+\]
 
 \end_inset
 
