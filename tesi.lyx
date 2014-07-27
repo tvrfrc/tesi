@@ -217,11 +217,7 @@ Supponiamo di avere a disposizione centinaia di migliaia documenti di testo,
  risultati ottenuti in precedenza, sono aggiunti alla collezione.
  Infine deve anche poter navigare attraverso i dati ottenuti senza dover
  ricorrere a filtri.
- 
-\begin_inset Newline newline
-\end_inset
-
-Se si vuole progettare ed implementare un sistema conforme alle specifiche
+ Se si vuole progettare ed implementare un sistema conforme alle specifiche
  descritte ci si troverà ad affrontare i seguenti problemi:
 \end_layout
 
@@ -269,25 +265,22 @@ I principali obiettivi dell'IR sono:
 adhoc retrieval
 \shape default
 : attività di recupero standard in cui l'utente specifica le informazioni
- necessarie attraverso una query che avvia una ricerca;
+ a lui necessarie attraverso una query che avvia una ricerca (eseguita dal
+ sistema informatico) dei documenti che potrebbero essere rilevanti per
+ l'utente;
 \end_layout
 
 \begin_layout Itemize
 
 \shape italic
-collaborative filtering
+collaborative filtering: 
 \shape default
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-http://en.wikipedia.org/wiki/Collaborative_filtering 
-\end_layout
-
-\end_inset
-
- 
+si intende una classe di strumenti e meccanismi che consentono il recupero
+ di informazioni predittive relativamente agli interessi di un insieme dato
+ di utenti a partire da una massa ampia di conoscenza.
+ L'idea alla base del collaborative filtering è che ogni singolo utente
+ che ha mostrato un certo insieme di preferenze, continuerà a mostrarle
+ in futuro;
 \end_layout
 
 \begin_layout Itemize
@@ -295,17 +288,10 @@ http://en.wikipedia.org/wiki/Collaborative_filtering
 \shape italic
 browsing
 \shape default
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-http://en.wikipedia.org/wiki/Browsing
-\end_layout
-
-\end_inset
-
-.
+: attività di ricerca interattiva in cui la direzione della ricerca è determinat
+a dall'utente sulla base di feedback immediati che esso riceve dal sistema
+ che sta esplorando.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2534,12 +2520,12 @@ key "dickey1983multiple"
 \uwave default
 \noun default
 \color inherit
-Dickey ha msotrato che questa funzione è una funzione attesa sotto una particola
+Dickey ha mostrato che questa funzione è una funzione attesa sotto una particola
 re estensione della distribuzione di Dirichlet che può essere rappresentata
  mediante funzioni ipergeometriche (infatti questa estensione è esattamente
  la distribuzione delle parole rappresentata in figura 
 \series bold
-(3.2
+(3.2 tesi blei
 \series default
 ).
  Questa funzione è usata nel contesto bayesiano per dati discreti
@@ -2562,6 +2548,234 @@ la censura si verifica quando il valore di una misurazione o osservazione
 \end_inset
 
  che, con queste impostazioni, è un paramentro casuale.
+\end_layout
+
+\begin_layout Subsection
+Stima dei parametri
+\end_layout
+
+\begin_layout Standard
+Per stimare i parametri del modello, è possibile utilizzare un metodo empirico
+ bayesiano.
+ In particolare, dato un corpus di documenti 
+\begin_inset Formula $D=\{\mathbf{w}_{1,}\mathbf{w}_{2},...,\mathbf{w}_{M}\}$
+\end_inset
+
+, vogliamo trovare i paramentri 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta$
+\end_inset
+
+ che massimizzano la verosimliglianza dei dati:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+l(\alpha,\mathbf{\beta_{1:K}})=\sum_{d=1}^{M}log\, p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\beta_{1:K})
+\end{equation}
+
+\end_inset
+
+
+\series default
+Come descritto in precedenza, la quantità 
+\begin_inset Formula $p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})$
+\end_inset
+
+ è computazionalmente intrattabile.
+ Tuttavia è possibile utilizzare l'algoritmo EM-variazionele
+\series bold
+ 
+\series default
+per massimizzare il lower bound della log verosimiglianza:
+\begin_inset Formula 
+\begin{equation}
+\mathcal{L}(\alpha,\beta)=\sum_{d=1}^{M}E_{qd}[logp(\theta_{d}\,|\,\alpha)]+E_{qd}[logp(\mathbf{z}_{d}\,|\,\theta_{d})]+E_{qd}[logp(\mathbf{w}_{d}\,|\,\mathbf{z}_{d},\beta)]\label{eq:12}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-E_{qd}[logq_{d}(\theta_{d})]-E_{qd}[logq_{d}(\mathbf{z}_{d})]
+\]
+
+\end_inset
+
+Il lower bound può essere ampliato in termini di parametri del modello e
+ di parametri variazionali, ampliando ciascuno dei cinque termini dell'equazione
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:12"
+
+\end_inset
+
+ come segue:
+\begin_inset Formula 
+\[
+\mathcal{L}=\sum_{d=1}^{M}log\Gamma\left(\sum_{j=1}^{k}\alpha_{j}\right)-\sum_{i=1}^{k}log\Gamma(\alpha_{i})+\sum_{i=1}^{k}(\alpha_{i}-1)\left(\Psi(\gamma_{di})-\Psi\left(\sum_{j=1}^{k}\gamma_{dj}\right)\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
++\sum_{n=1}^{N}\sum_{i=1}^{k}\phi_{dni}\left(\Psi(\gamma_{di})-\Psi\left(\sum_{j=1}^{k}\gamma_{dj}\right)\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
++\sum_{n=1}^{N}\sum_{i=1}^{k}\sum_{j=1}^{V}\phi_{dni}\omega_{dn}^{j}log\beta_{ij}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-log\Gamma\left(\sum_{j=1}^{k}\gamma_{dj}\right)+\sum_{i=1}^{k}log\Gamma(\gamma_{di})-\sum_{i=1}^{k}(\gamma_{di}-1)\left(\Psi(\gamma_{di})-\Psi\left(\sum_{j=1}^{k}\gamma_{dj}\right)\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+-\sum_{n=1}^{N}\sum_{i=1}^{k}\phi_{dni}log\phi_{dni}
+\]
+
+\end_inset
+
+L'algoritmo EM-variazionale ripete i seguenti due passi fino alla convergenza
+ del bound:
+\end_layout
+
+\begin_layout Enumerate
+(
+\shape italic
+E-step
+\shape default
+) Per ciascun documento, trovare i valori di ottimizzazione dei parametri
+ variazionali 
+\begin_inset Formula $\{\gamma_{d}^{*},\phi_{d}^{*}:\, d\in D\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+(
+\shape italic
+M-step
+\shape default
+) Massimizzare il lower bound rispetto ai paramentri del modello 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ e 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+.
+ Questo corrisponde a trovare la massima verosimiglianza stimata cons tatistiche
+ sufficienti previste sotto la distribuzione a posteriori ottenuta dall'
+\shape italic
+E-step
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+Per massimizzare rispetto ai paramentri multinomiali, è necessario isolare
+ i termini ed aggiungere i moltiplicatori di Lagrange
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+i moltiplicatori di Lagrange permettono di trovare i massimi e minimi locali
+ di una funzione soggetta a vincoli di uguaglianza
+\end_layout
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\mathcal{L}_{[\beta]}=\sum_{d=1}^{M}\sum_{n=1}^{N_{d}}\sum_{i=1}^{k}\sum_{j=1}^{V}\phi_{dni}\omega_{dn}^{j}log\beta_{ij}+\sum_{i=1}^{k}\lambda_{i}\left(\sum_{j=1}^{V}\beta_{ij}-1\right)
+\]
+
+\end_inset
+
+Derivando rispetto a 
+\begin_inset Formula $\beta{}_{ij}$
+\end_inset
+
+ otteniamo:
+\begin_inset Formula 
+\[
+\beta_{ij}\propto\sum_{d=1}^{M}\sum_{n=1}^{N_{d}}\phi_{dni}\omega_{dn}^{j}
+\]
+
+\end_inset
+
+Analogamente, per massimizzare rispetto ad 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, è necessario isolare i termini appropriati:
+\begin_inset Formula 
+\[
+\mathcal{L}_{[\alpha]}=\sum_{d=1}^{M}\left(log\Gamma\left(\sum_{j=1}^{k}\alpha_{j}\right)-\sum_{i=1}^{k}log\Gamma(\alpha_{i})+\sum_{i=1}^{k}\left((\alpha_{i}-1)(\Psi(\gamma_{di})-\Psi(\sum_{j=1}^{k}\gamma_{d_{j}}))\right)\right)
+\]
+
+\end_inset
+
+Derivando rispetto ad 
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+ risulta:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial\mathcal{L}}{\partial\alpha_{i}}=M\left(\Psi\left(\sum_{j=1}^{k}\alpha_{j}\right)-\Psi(\alpha_{i})+\sum_{d=1}^{M}\left(\Psi(\gamma_{di})-\Psi\left(\sum_{j=1}^{k}\gamma_{d_{j}}\right)\right)\right)
+\]
+
+\end_inset
+
+Questa derivata dipende da 
+\begin_inset Formula $\alpha_{j}$
+\end_inset
+
+, dove 
+\begin_inset Formula $j\neq i$
+\end_inset
+
+, pertanto si rende necessario l'utilizzo di un metodo iterativo per trovare
+ il massimo valore.
+ Buoni metodi per trovare stime della massima verosimiglianza di ditribuzioni
+ di Dirichlet possono essere trovate in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "minka2000estimating"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -3024,31 +3238,201 @@ Analizzando lo pseudocodice è chiaro come ciascuna iterazione della procedura
 Campionamento di Gibbs
 \end_layout
 
+\begin_layout Subsubsection*
+Catena di Markov
+\end_layout
+
 \begin_layout Standard
-Il campionamento di Gibbs è una tecnica che permette di approssimare il
- valore di un integrale ed è applicabile nel caso in cui lo spazio 
-\begin_inset Formula $Z$
+Una catena di Markov è un sistema che subisce transizioni da uno stato ad
+ un altro.
+ Il processo di transizione è casuale e 
+\begin_inset Quotes eld
 \end_inset
 
- abbia almeno due dimensioni (ciascun punto 
-\begin_inset Formula $z=<z_{1},\,...,\, z_{k}>$
+memoryless
+\begin_inset Quotes erd
 \end_inset
 
-, con 
-\begin_inset Formula $z_{k}>1$
-\end_inset
-
-).
- L'idea di base è quella di fare una scelta separata per ciascuna della
+: lo stato successivo del sistema dipende solo dallo stato corrente e non
+ dalla sequenza di eventi che ha preceduto la transizione di stato.
+ Questo specifico tipo di "memorylessness" è chiamato 
+\shape italic
+proprietà di Markov
+\shape default
+.
  
-\begin_inset Formula $k$
+\end_layout
+
+\begin_layout Standard
+Una catena di Markov è una sequenza di variabili casuali 
+\begin_inset Formula $X{}_{1},X_{2},X_{3},...,X_{n}$
 \end_inset
 
- dimensioni e che ciascuna scelta dipende dalle altre 
-\begin_inset Formula $k-1$
+, che gode della proprietà di Markov.
+ Formalmente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(X_{n+1}=x\mid X_{1}=x_{1},X_{2}=x_{2},\ldots,X_{n}=x_{n})=p(X_{n+1}=x\mid X_{n}=x_{n})
+\]
+
 \end_inset
 
- dimensioni.
+se entrambe le probabilità condizionate sono ben definite.
+ 
+\end_layout
+
+\begin_layout Standard
+I possibili valori di 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ formano un insieme numerabile
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Un insieme numerabile, è un insieme i cui elementi possono essere contati
+ uno alla volta.
+ Qualora l'insieme numerabile sia infinito, ciascun elemento viene associato
+ ad un numero naturale
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ chiamato 
+\shape italic
+spazio degli stati della catena
+\shape default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Una catena di Markov può essere rappresentata mediante un grafo diretto,
+ i cui 
+\begin_inset Formula $n$
+\end_inset
+
+ archi sono etichettati con le probabilità 
+\begin_inset Formula $p(X_{n+1}=x\mid X_{n}=x_{n})$
+\end_inset
+
+ di transizione al tempo 
+\begin_inset Formula $n$
+\end_inset
+
+ da uno stato, ad un altro stato al tempo 
+\begin_inset Formula $n+1$
+\end_inset
+
+.
+ Le stesse informazioni possono essere rappresentate mediante una matrice
+ di transizione
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+http://en.wikipedia.org/wiki/Transition_matrix
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Algoritmo di Metropolis-Hastings
+\end_layout
+
+\begin_layout Subsubsection*
+Monte Carlo Markov Chain 
+\end_layout
+
+\begin_layout Standard
+Il campionamento di Gibbs è un semplice algoritmo MCMC (Monte Carlo Markov
+ Chain) e può essere visto come un caso speciale dell'algoritmo di Metropolis-Ha
+stings.
+\end_layout
+
+\begin_layout Standard
+Prendiamo in considerazione la distribuzione 
+\begin_inset Formula $p(\mathbf{z})=p(z_{1},z_{2},...,z_{M})$
+\end_inset
+
+ a partire dalla quale vogliamo campionare e supponiamo di aver scelto uno
+ stato iniziale per la catena di Markov.
+ Ciascun passo del campionamento di Gibbs comporta la sostituzione del valore
+ di una delle varibili con un valore calcolato a partire da una distribuzione
+ di queste variabili condizionata ai valori delle restanti variabili.
+ Quindi si rimpiazzerà 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ con un valore calcolato dalla distribuzione 
+\begin_inset Formula $p(z_{i}\,|\,\mathbf{z}_{\textbackslash i})$
+\end_inset
+
+ dove 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+ indica l'
+\begin_inset Formula $i$
+\end_inset
+
+-esimo componente di 
+\series bold
+
+\begin_inset Formula $\mathbf{z}$
+\end_inset
+
+
+\series default
+ e 
+\begin_inset Formula $\mathbf{z}_{\textbackslash i}$
+\end_inset
+
+ denota 
+\begin_inset Formula $z_{1},z_{2},...,z_{M}$
+\end_inset
+
+ escluso 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+.
+ Questa procedura è ripetuta o 
+\series bold
+cycling 
+\series default
+le variabili in un particolare ordine, oppure scegliendo ad ogni iterazione
+ la variabile da aggiornare in modo casuale dalla distribuzione.
+\end_layout
+
+\begin_layout Standard
+Per esempio, supponiamo di avere 
 \end_layout
 
 \begin_layout Standard
@@ -3150,108 +3534,12 @@ end{algorithm}
 \end_layout
 
 \begin_layout Subsection
-Stima dei parametri
-\end_layout
-
-\begin_layout Standard
-Per stimare i parametri del modello, è possibile utilizzare un metodo empirico
- bayesiano.
- In particolare, dato un corpus di documenti 
-\begin_inset Formula $D=\{\mathbf{w}_{1,}\mathbf{w}_{2},...,\mathbf{w}_{M}\}$
-\end_inset
-
-, vogliamo trovare i paramentri 
-\begin_inset Formula $\alpha$
-\end_inset
-
- e 
-\begin_inset Formula $\beta$
-\end_inset
-
- che massimizzano la verosimliglianza dei dati:
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-\begin_inset Formula 
-\begin{equation}
-l(\alpha,\mathbf{\beta_{1:K}})=\sum_{d=1}^{M}log\, p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\beta_{1:K})
-\end{equation}
-
-\end_inset
-
-
-\series default
-Come descritto in precedenza, la quantità 
-\begin_inset Formula $p(\mathbf{w}_{d}\,|\,\mathbf{\alpha},\mathbf{\mathbf{\beta}})$
-\end_inset
-
- è computazionalmente intrattabile.
- Tuttavia è possibile utilizzare l'algoritmo EM-variazionele
-\series bold
- 
-\series default
-per massimizzare il lower bound dato della log verosimiglianza:
-\begin_inset Formula 
-\[
-\mathcal{L}(\alpha,\beta)=\sum_{d=1}^{M}E_{qd}[logp(\theta_{d}\,|\,\alpha)]+E_{qd}[logp(\mathbf{z}_{d}\,|\,\theta_{d})]+E_{qd}[logp(\mathbf{w}_{d}\,|\,\mathbf{z}_{d},\beta)]
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
--E_{qd}[logq_{d}(\theta_{d})]-E_{qd}[logq_{d}(\mathbf{z}_{d})]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-La derivazione dell'algoritmo EM, da luogo al seguente algoritmo iterativo:
-\end_layout
-
-\begin_layout Enumerate
-(
-\shape italic
-E-step
-\shape default
-) Per ciascun documento, trova i valori ottimizzati dei parametri variazionali
- 
-\begin_inset Formula $\{\gamma_{d}^{*},\phi_{d}^{*}:\, d\in D\}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-(
-\shape italic
-M-step
-\shape default
-) Massimizza il risultante lower bound derispetto ai parametri 
-\begin_inset Formula $\alpha$
-\end_inset
-
- e 
-\begin_inset Formula $\beta$
-\end_inset
-
- del modello.
- 
-\end_layout
-
-\begin_layout Subsection
 Smoothing
 \end_layout
 
 \begin_layout Standard
-La grande dimensione del vocabolario, caratteristica di molti corpora di
- documenti, causa problemi di sparsità: è probabile che un nuovo documento
+La grande dimensione del vocabolario, caratteristica di molte collezioni
+ di documenti, è causa problemi di sparsit: è probabile che un nuovo documento
  contenga parole che non compaiono in nessun documento del training set.
  Le stime di massima verosimiglianza dei paramentri multinomiali assegnano
  probabilità 0 a queste parole, e quindi probabilità 0 al nuovo documento.
@@ -3274,17 +3562,8 @@ Impostando LDA, otteniamo il modello grafico esteso mostrato in figura (
 fig 7 pag 1006
 \series default
 ).
- Il paramentro del modello
-\begin_inset Formula $\beta$
-\end_inset
-
- verrà trattato come una matrice casuale 
-\begin_inset Formula $k\times V$
-\end_inset
-
- (una riga per ciascun componente della mistura), assumendo che ciascuna
- riga sia generata indipendentemente a partire da una distribuzione di Dirichlet
- sostituibile
+ Le distribuzioni sui topic sono ora variabili casuali, generate in modo
+ indipendente da una distribuzione di Dirichlet sostituibile
 \begin_inset Foot
 status open
 
@@ -3300,30 +3579,14 @@ Una distribuzione di Dirichlet scambiabile è una distribuzione di Dirichlet
 \end_inset
 
 .
- In seguito viene estesa la procedura di inferenza per poter trattare 
-\begin_inset Formula $\beta_{i}$
+ È ora possibile estendere la procedura di inferenza, in modo da poter approssim
+are la distribuzione a posteriori di 
+\begin_inset Formula $\beta_{1:K}$
 \end_inset
 
- come variabili casuali che vengono dotate di una distribuzione a posteriori,
- condizionata ai dati.
- 
-\end_layout
-
-\begin_layout Standard
-Consideriamo ora un approccio variazionale all'inferenza bayesiana che assegna
- una distribuzione separabile alle variabili casuali 
-\begin_inset Formula $\beta$
-\end_inset
-
-, 
-\begin_inset Formula $\theta$
-\end_inset
-
- e 
-\begin_inset Formula $\mathbf{z}$
-\end_inset
-
-:
+ condizionata ai dati utilizzando un approccio variazionale all'inferenza
+ bayesiana che utilizza una distribuzione delle variabili casuali completamente
+ fattorizzata: 
 \end_layout
 
 \begin_layout Standard
@@ -3345,19 +3608,69 @@ reference "eq:minnie"
 
 \end_inset
 
- (
+.
+ La risultante procedura di inferenza variazionale 
 \series bold
-manca fine paragrafo
+yelds
 \series default
-)
-\begin_inset Newline newline
+ equazioni 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pluto"
+
 \end_inset
 
+ e 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:paperino"
 
-\end_layout
+\end_inset
 
-\begin_layout Subsection
-Esempi
+ come le equazioni aggiornate per i paramentri variazionali 
+\begin_inset Formula $\phi_{d}$
+\end_inset
+
+ e 
+\begin_inset Formula $\gamma_{d}$
+\end_inset
+
+, dove tutte le istanze di 
+\begin_inset Formula $\beta$
+\end_inset
+
+ sono sostituite da 
+\begin_inset Formula $exp\{E[log\beta\,|\,\rho]\}$
+\end_inset
+
+.
+ Il parametro variazionale 
+\begin_inset Formula $\rho$
+\end_inset
+
+ può essere utleriormente aggiornato come segue:
+\begin_inset Formula 
+\[
+\rho_{ij}=\lambda+\sum_{d=1}^{M}\sum_{n=1}^{N_{d}}\phi_{dni}^{*}\omega_{dn}^{j}
+\]
+
+\end_inset
+
+Iterare queste equazioni fino alla convergenza, produce un'approssimazione
+ della distribuzione a posteriori di 
+\begin_inset Formula $\beta_{1:K}$
+\end_inset
+
+, 
+\begin_inset Formula $\theta_{1:M}$
+\end_inset
+
+ e 
+\begin_inset Formula $\mathbf{z}{}_{1:M}$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3537,7 +3850,7 @@ ianza per una arbitraria distribuzione
 \end_inset
 
 -divergence tra la variational posterior probability e la true posterior
- probability.le
+ probability.
 \end_layout
 
 \begin_layout Standard
